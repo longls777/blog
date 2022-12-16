@@ -7,8 +7,6 @@ categories: Others
 math: true
 ---
 
-1
-
 ## 一、初始化hexo
 
 按照hexo建立博客流程
@@ -37,9 +35,16 @@ math: true
 
 将原博客根目录下的图片复制到node_modules\hexo-theme-fluid\source\img文件夹下
 
-## 五、将文件夹与github相关联
+## 五、生成并推送至GitPages
 
 可能需要先安装hexo deploy相关的git组件
 
 `npm install --save hexo-deployer-git`
 
+然后hexo clean & hexo g & hexo d，生成并部署
+
+## 六、将文件夹与github仓库关联，建立新的开发分支
+
+`git remote add origin git@github.com:longls777/heart.github.io.git`
+
+建立新的开发分支并推送至仓库
