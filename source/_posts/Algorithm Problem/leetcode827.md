@@ -1,5 +1,5 @@
 ---
-title: leetcode827
+title: leetcode827 最大人工岛
 date: 2022-09-18 13:56:43
 tags: 并查集
 categories: Algorithm Problem

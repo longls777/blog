@@ -1,5 +1,5 @@
 ---
-title: leetcode300
+title: leetcode300 最长递增子序列
 date: 2022-10-24 20:00:00
 tags: DP
 categories: Algorithm Problem

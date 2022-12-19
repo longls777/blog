@@ -1,5 +1,5 @@
 ---
-title: leetcode782
+title: leetcode782 变为棋盘
 date: 2022-08-23 20:39:39
 tags: 矩阵
 categories: Algorithm Problem

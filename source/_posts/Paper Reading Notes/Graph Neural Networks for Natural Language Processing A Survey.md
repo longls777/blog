@@ -1,6 +1,6 @@
 ---
 title: Graph Neural Networks for Natural Language Processing - A Survey
-tags: 
+tags: GNN
 categories: Paper Reading Notes
 date: 2022-12-16 16:06:00
 index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20221216163344103.png
@@ -34,3 +34,5 @@ math: true
 - 有效地建模复杂的数据。这样的挑战很重要，因为许多NLP任务涉及学习基于图的输入和其他高度结构化的输出数据之间的映射，如序列、树，以及节点和边都有多类型的图数据。
 
 ![图的应用分类](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20221216163344103.png)
+
+## 基于图的NLP算法
