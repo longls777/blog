@@ -61,3 +61,28 @@ save 300 10 # 服务器在300秒之内，对数据库进行了至少10次修改
 save 60 10000 # 服务器在60秒之内，对数据库进行了至少10000次修改
 ```
 
+Redis的服务器周期性操作函数serverCron默认每隔100毫秒就会执行一次，该函数用于对正在运行的服务器进行维护，它的其中一项工作就是检查save选项所设置的保存条件是否已经满足，如果满足的话，就执行BGSAVE命令
+
+## RDB文件结构
+
+![image-20230217100034471](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230217100034471.png)
+
+- REDIS：常量，五个字符，长度为5字节，通过这五个字符，程序可以在载入文件时，快速检查所载入的文件是否是RDB文件
+- db_version：一个字符串表示的整数，长度为4字节，记录了RDB文件的版本号
+- databases：包含任意个数据库，以及各个数据库中的键值对数据
+- EOF：常量，长度为1字节，标志着RDB文件正文内容的结束
+- check_sum：8字节长的无符号整数，保存一个校验和，这个校验和是程序通过对REDIS、db_version、databases、EOF四个部分的内容进行计算得出的。服务器在载入RDB文件时，会将载入数据所计算出的校验和与check_sum所记录的校验和进行对比，以此来检查RDB文件是否有出错或者损坏的情况出现
+
+![image-20230217100955846](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230217100955846.png)
+
+每个非空数据库在RDB文件中都可以保存为SELECTDB、db_number、key_value_pairs三个部分：
+
+- SELECTDB：常量，长度为1字节，表示接下来将读入一个数据库号
+- db_number：数据库号
+- key_value_pairs：保存了数据库中的所有键值对和过期时间
+
+![image-20230217101541373](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230217101541373.png)
+
+![image-20230217101551487](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230217101551487.png)
+
+> 关于value的编码方式，这里不再介绍，有兴趣可以查阅《redis设计与实现》10.3.3节
