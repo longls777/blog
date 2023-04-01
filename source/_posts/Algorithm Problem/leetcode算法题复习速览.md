@@ -7,6 +7,8 @@ math: true
 ---
 
 > https://github.com/labuladong/fucking-algorithm
+>
+> https://labuladong.gitee.io/algo/
 
 ## 链表
 
@@ -32,16 +34,29 @@ math: true
 - ##### 双指针
 
   - [26. 删除有序数组中的重复项](https://leetcode.cn/problems/remove-duplicates-from-sorted-array/)
-
-  - [27. 移除元素](https://leetcode.cn/problems/remove-element/)
-
+- [27. 移除元素](https://leetcode.cn/problems/remove-element/)
   - [283. 移动零](https://leetcode.cn/problems/move-zeroes/)
-
-  - [167. 两数之和 II - 输入有序数组](https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/)
-
+- [167. 两数之和 II - 输入有序数组](https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/)
   - [344. 反转字符串](https://leetcode.cn/problems/reverse-string/)
-
-  - [5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/)(dp also)
-
+- [5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/)(dp also)
 
 
+
+## 二叉树
+
+- [104. 二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/description/)
+- [144. 二叉树的前序遍历](https://leetcode.cn/problems/binary-tree-preorder-traversal/description/)
+- [543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/description/)
+
+
+
+## 动态规划
+
+- [322. 零钱兑换](https://leetcode.cn/problems/coin-change/description/)
+
+
+
+## 回溯
+
+- [46. 全排列](https://leetcode.cn/problems/permutations/description/)
+- 
