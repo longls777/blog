@@ -102,7 +102,7 @@ float和double没有实现缓存池
 **重写的规则：**
 
 - 父类方法的参数列表必须完全与被子类重写的方法的参数列表相同，否则不能称其为重写而是重载
--  Java中规定，被子类重写的方法不能拥有比父类方法更加严格的访问权限
+- Java中规定，被子类重写的方法不能拥有比父类方法更加严格的访问权限
 - 在继承过程中如果父类当中的方法抛出异常，那么在子类中重写父类的该方法时，也要抛出异常，而且抛出的异常不能多于父类中抛出的异常(可以等于父类中抛出的异常)。换句话说，重写方法一定不能抛出新的检查异常，或者比被重写方法声明更加宽泛的检查型异常。例如，父类的一个方法申明了一个检查异常IOException，在重写这个方法时就不能抛出Exception，只能抛出IOException的子类异常，可以抛出非检查异常
 
 > 1、重载是一个编译期概念、重写是一个运行期间概念。
@@ -113,9 +113,79 @@ float和double没有实现缓存池
 >
 > 4、因为在编译期已经确定调用哪个方法，所以重载并不是多态。而重写是多态。重载只是一种语言特性，是一种语法规则，与多态无关，与面向对象也无关。（注：严格来说，重载是编译时多态，即静态多态。但是，Java中提到的多态，在不特别说明的情况下都指动态多态）
 
+**10. 匿名内部类**
+
+所谓匿名内部类，是指可以利用内部类创建没有名称的对象，它一步完成了声明内部类和创建该类的一个对象，并利用该对象访问到类里面的成员
+
+匿名内部类必须实现一个接口或者继承一个类，不用class修饰，也不需要public，private，protected，static 等修饰；没有类名，也没有构造方法，在匿名内部类里面不能定义静态的属性和方法，只能实例化一次（因为匿名内部类的创建和实例化是同时进行的）；匿名内部类其实可以看做是其外部类的一个成员，所以在匿名内部类中可以获取声明为private static 的属性的值
+
+1. 使用匿名内部类时，我们必须是继承一个类或者实现一个接口，但是两者不可兼得，同时也只能继承一个类或者实现一个接口
+2. 匿名内部类中是不能定义构造函数的
+3. 匿名内部类中不能存在任何的静态成员变量和静态方法
+4. 匿名内部类为局部内部类，所以局部内部类的所有限制同样对匿名内部类生效
+5. 匿名内部类不能是抽象的，它必须要实现继承的类或者实现的接口的所有抽象方法
+
+**11. Object方法**
+
+```java
+public native int hashCode()
+
+public boolean equals(Object obj)
+
+protected native Object clone() throws CloneNotSupportedException
+
+public String toString()
+
+public final native Class<?> getClass()
+
+protected void finalize() throws Throwable {}
+
+public final native void notify()
+
+public final native void notifyAll()
+
+public final native void wait(long timeout) throws InterruptedException
+
+public final void wait(long timeout, int nanos) throws InterruptedException
+
+public final void wait() throws InterruptedException
+```
+
+**equals()**
+
+- 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法
+- 对于引用类型，== 判断两个变量是否引用同一个对象，而 equals() 判断引用的对象是否等价
+
+如何实现一个equals方法？
+
+- 检查是否为同一个对象的引用，如果是直接返回 true
+- 检查是否是同一个类型，如果不是，直接返回 false
+- 将 Object 对象进行转型
+- 判断每个关键域是否相等
+
+**hashCode()**
+
+- hashCode() 返回哈希值，而 equals() 是用来判断两个对象是否等价。等价的两个对象散列值一定相同，但是散列值相同的两个对象不一定等价，这是因为计算哈希值具有随机性，两个值不同的对象可能计算出相同的哈希值。
+- 在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证等价的两个对象哈希值也相等。
+- HashSet 和 HashMap 等集合类使用了 hashCode() 方法来计算对象应该存储的位置，因此要将对象添加到这些集合类中，需要让对应的类实现 hashCode() 方法。
+
+**toString()**
+
+默认返回 ToStringExample@4554617c 这种形式，其中 @ 后面的数值为散列码的无符号十六进制表示。
+
+**clone()**
+
+- clone() 是 Object 的 protected 方法，它不是 public，一个类不显式去重写 clone()，其它类就不能直接去调用该类实例的 clone() 方法。
+- Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调用了 clone() 方法，就会抛出 CloneNotSupportedException。
+- 浅拷贝：拷贝对象和原始对象的引用类型引用同一个对象
+- 深拷贝：拷贝对象和原始对象的引用类型引用不同对象
+- clone的遵循规则参考https://blog.csdn.net/fengyuyeguirenenen/article/details/122449282
+
+
+
 # 二、面向对象
 
-**说说你是怎么理解Java的面向对象的？**
+**1. 说说你是怎么理解Java的面向对象的？**
 
 面向对象是向现实世界模型的自然延伸，这是一种”万物皆对象”的编程思想。在现实生活中的任何物体都可以归为一类事物，而每一个个体都是一类事物的实例，也就是说现实世界中每一个实体都是一个对象。在Java中，一切皆是对象。
 
@@ -154,6 +224,22 @@ Java的多态性体现在两个方面：由方法重载实现的静态多态性�
 重载：方法名相同，参数类型、个数或顺序不同，返回值类型、访问修饰符可以相同也可以不同
 
 重写：方法名、参数列表、返回值类型必须相同，抛出的异常范围小于等于父类，访问修饰符范围大于等于父类。
+
+
+
+**2. Java中的静态方法和静态属性可以被继承吗**
+
+**java中静态属性和和静态方法可以被继承，但是没有被重写（overwrite）而是被隐藏**
+
+静态方法和属性是属于类的，调用的时候直接通过类名.方法名完成的，不需继承机制就可以调用如果子类里面定义了静态方法和属性，那么这时候父类的静态方法或属性称之为“隐藏”，你如果想要调用父类的静态方法和属性，直接通过父类名.方法名或变量名完成，至于是否继承一说，子类是有继承静态方法和属性，但是跟实例方法和属性不太一样，存在“隐藏”的这种情况。
+
+多态之所以能够实现是依赖于**继承接口**和 **重写 、重载**（继承和重写最为关键）。有了继承和重写就可以实现父类的引用可以指向不同子类的对象。重写的功能是：“重写”后子类的优先级要高于父类的优先级，但是“隐藏”是没有这个优先级之分的。
+
+静态属性、静态方法和非静态的属性都可以被 继承 和 隐藏 而不能够被重写，因此不能实现多态，不能实现父类的引用可以指向不同子类的对象。    
+
+非静态的方法可以被继承和重写，因此可以实现多态
+
+
 
 # 三、访问权限
 
@@ -251,3 +337,298 @@ Java里只有值传递
 **④设置对象头：** 初始化零值完成之后，**虚拟机要对对象进行必要的设置**，例如这个对象是哪个类的实例、如何才能找到类的元数据信息、对象的哈希码、对象的 GC 分代年龄等信息。 **这些信息存放在对象头中。** 另外，根据虚拟机当前运行状态的不同，如是否启用偏向锁等，对象头会有不同的设置方式
 
 **⑤执行 init 方法：** 在上面工作都完成之后，从虚拟机的视角来看，一个新的对象已经产生了，但从 Java 程序的视角来看，对象创建才刚开始，<init> 方法还没有执行，所有的字段都还为零。所以一般来说，执行 new 指令之后会接着执行 <init> 方法，把对象按照程序员的意愿进行初始化，这样一个真正可用的对象才算完全产生出来
+
+
+
+**说说<init>方法和<clinit>方法？**
+
+**<init>方法**
+
+Java在编译之后会在字节码文件中生成<init>方法，这称为**实例**构造器。它会将变量初始化、语句块、调用父类的构造器等操作收敛到<init>方法中。
+
+**收敛顺序**为：父类变量初始化、父类语句块、父类构造函数、子类变量初始化、子类语句块、子类构造函数。
+
+**<clinit>方法** 
+
+Java在编译之后会在字节码文件中生成<clinit>方法，这称为**类**构造器。他会将静态变量初始化、静态语句块收敛到<clinit>方法中。**收敛顺序**为：父类静态变量初始化、父类静态语句块、子类静态变量初始化、子类静态语句块。
+
+<init>方法在对象实例化执行的；<clinit>方法在类加载过程中执行的。所以<clinit>方法一定比<init>方法先执行。
+
+![类的初始化过程](http://longls777.oss-cn-beijing.aliyuncs.com/img/d123123.png)
+
+
+
+# 七、异常
+
+**说说Java的异常体系？**
+
+Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： Error 和 Exception。其中 Error 用来表示 JVM 无法处理的错误（只能尽量避免），Exception 能被程序本身处理(try-catch)
+
+![Java异常体系](http://longls777.oss-cn-beijing.aliyuncs.com/img/Java异常体系.png)
+
+- Error ：属于程序无法处理的错误 ，无法通过 catch 来进行捕获 。例如，Java 虚拟机运行错误（Virtual MachineError）、虚拟机内存不够错误(OutOfMemoryError)、类定义错误（NoClassDefFoundError）等 。这些异常发生时，Java 虚拟机（JVM）一般会选择线程终止
+- Exception：程序本身可以处理的异常，可以通过 catch 来进行捕获。Exception 又可以分为 受检查异常(必须处理) 和 不受检查异常(可以不处理)
+  - 受检异常：也叫编译异常，包括Exception中除了RuntimeException及其子类之外的异常，如IOException，需要对其进行处理（try catch或者throw）
+  - 不受检异常：也叫运行时异常，包括RuntimeException类及其子类，比如空指针异常，数组越界异常
+
+
+
+# 八、泛型
+
+**什么是泛型？说说泛型的实现原理？**
+
+- Java 泛型（generics）是 JDK 5 中引入的一个新特性，泛型提供了编译时类型安全检测机制，该机制允许程序员**在编译时检测到非法的类型**
+- 泛型的本质是参数化类型，也就是说所操作的数据类型被指定为一个参数
+- Java 的泛型是伪泛型，这是因为 Java 在编译期间，所有的泛型信息都会被擦除掉，这也就是通常所说类型擦除
+
+**类型擦除**
+
+```java
+public class GenericType {
+    public static void main(String[] args) {  
+        ArrayList<String> arrayString=new ArrayList<String>();   
+        ArrayList<Integer> arrayInteger=new ArrayList<Integer>();   
+        System.out.println(arrayString.getClass()==arrayInteger.getClass());  
+    }  
+}
+```
+
+输出：
+
+```java
+true
+```
+
+- 在编译期间，所有的泛型信息都会被擦除，List<Integer>和List<String>类型，在编译后都会变成List类型（原始类型）
+- Java中的泛型基本上都是在编译器这个层次来实现的，这也是Java的泛型被称为“伪泛型”的原因
+- 原始类型就是泛型类型擦除了泛型信息后，在字节码中真正的类型
+- Java编译器是通过先检查代码中泛型的类型，然后在进行类型擦除，再进行编译
+
+
+
+# 九、反射
+
+**说说Java的反射？**
+
+- 反射 (Reflection) 是 Java 的特征之一，它允许运行中的 Java 程序获取自身的信息，并且可以操作类或对象的内部属性
+- 通过反射，我们可以在运行时获得程序或程序集中每一个类型的成员和成员的信息。程序中一般的对象的类型都是在编译期就确定下来的，而 Java 反射机制可以动态地创建对象并调用其属性。这样的对象的类型在编译期是未知的。所以我们可以通过反射机制直接创建对象。即使这个对象的类型在编译期是未知的。
+- 反射的核心是 JVM 在运行时才动态加载类或调用方法/访问属性，它不需要事先（写代码的时候或编译期）知道运行对象是谁。
+
+Java 反射主要提供以下功能：
+
+- 在运行时判断任意一个对象所属的类
+- 在运行时构造任意一个类的对象
+- 在运行时判断任意一个类所具有的成员变量和方法（通过反射甚至可以调用private方法）
+- 在运行时调用任意一个对象的方法
+
+**反射的用法**
+
+- 获得class对象：
+
+- - 使用 Class 类的 forName 静态方法
+  - 直接获取某一个对象的 class，如：
+
+- ```java
+  Class<?> klass = int.class;
+  Class<?> classInt = Integer.TYPE;
+  ```
+
+- - 调用某个对象的 getClass() 方法，如：
+
+```java
+StringBuilder str = new StringBuilder("123");
+Class<?> klass = str.getClass();
+```
+
+- 判断是否为某个类的实例：
+
+一般地，我们用 instanceof 关键字来判断是否为某个类的实例。
+
+> 使用 instanceof 返回true：
+>
+> instanceof 前面的引用变量编译时的类型要么与后面的类型相同，要么与后面的类型具有父子继承关系
+
+同时我们也可以借助反射中 Class 对象的 isInstance() 方法来判断是否为某个类的实例，它是一个 native 方法：
+
+```java
+public native boolean isInstance(Object obj);
+```
+
+- 创建实例：
+
+通过反射来生成对象主要有两种方式：
+
+1. 使用Class对象的newInstance()方法来创建Class对象对应类的实例：
+
+```java
+Class<?> c = String.class;
+Object str = c.newInstance();
+```
+
+2. 先通过Class对象获取指定的Constructor对象，再调用Constructor对象的newInstance()方法来创建实例。这种方法可以用指定的构造器构造类的实例：
+
+```java
+//获取String所对应的Class对象
+Class<?> c = String.class;
+//获取String类带一个String参数的构造器
+Constructor constructor = c.getConstructor(String.class);
+//根据构造器创建实例
+Object obj = constructor.newInstance("23333");
+```
+
+- 调用方法：当我们从类中获取了一个方法后，我们就可以用 invoke() 方法来调用这个方法
+
+```java
+ //获取字节码对象
+Class<Msym> clazz = (Class<Msym>) Class.forName("online.Msym");
+//获取一个对象
+Constructor con =  clazz.getConstructor();
+Msym m = (Msym) con.newInstance();
+//获取Method对象
+Method method = clazz.getMethod("test", String[].class);
+//调用invoke方法来调用
+String[] s = new String[]{"aa","bb"};
+method.invoke(m, s);
+```
+
+
+
+# 十、BIO NIO AIO
+
+**1. 说说Java的I/O？**
+
+Java 中 3 种常见 IO 模型
+
+**BIO (Blocking I/O)**	
+
+BIO 属于同步阻塞 IO 模型 。
+
+同步阻塞 IO 模型中，应用程序发起 read 调用后，会一直阻塞，直到在内核把数据拷贝到用户空间。
+
+![同步阻塞](http://longls777.oss-cn-beijing.aliyuncs.com/img/同步阻塞.png)
+
+在客户端连接数量不高的情况下，是没问题的。但是，当面对十万甚至百万级连接的时候，传统的 BIO 模型是无能为力的。因此，我们需要一种更高效的 I/O 处理模型来应对更高的并发量。
+
+**NIO (Non-blocking I/O)**
+
+Java 中的 NIO 于 Java 1.4 中引入，对应 java.nio 包，提供了 Channel , Selector，Buffer 等抽象。
+
+它支持面向缓冲的，基于通道的 I/O 操作方法。 对于高负载、高并发的（网络）应用，应使用 NIO 。
+
+Java 中的 NIO 可以看作是 I/O 多路复用模型。也有很多人认为，Java 中的 NIO 属于同步非阻塞 IO 模型。
+
+![同步非阻塞](http://longls777.oss-cn-beijing.aliyuncs.com/img/同步非阻塞.png)
+
+NIO主要有三大核心部分：**Channel(通道)**，**Buffer(缓冲区)**， **Selector**
+
+传统IO基于字节流和字符流进行操作，而NIO基于Channel和Buffer(缓冲区)进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。Selector(选择区)用于监听多个通道的事件（比如：连接打开，数据到达）。因此，单个线程可以监听多个数据通道。
+
+NIO和传统IO（以下简称IO）之间第一个最大的区别是，IO是面向流的，NIO是面向缓冲区的。 Java IO面向流意味着每次从流中读一个或多个字节，直至读取所有字节，它们没有被缓存在任何地方。此外，它不能前后移动流中的数据。如果需要前后移动从流中读取的数据，需要先将它缓存到一个缓冲区。NIO的缓冲导向方法略有不同。数据读取到一个它稍后处理的缓冲区，需要时可在缓冲区中前后移动。这就增加了处理过程中的灵活性。但是，还需要检查是否该缓冲区中包含所有需要处理的数据。而且，需确保当更多的数据读入缓冲区时，不能覆盖缓冲区里尚未处理的数据。
+
+IO的各种流是阻塞的。这意味着，当一个线程调用read() 或 write()时，该线程被阻塞，直到有一些数据被读取，或数据完全写入。该线程在此期间不能再干任何事情了。 NIO的非阻塞模式，使一个线程从某通道发送请求读取数据，但是它仅能得到目前可用的数据，如果目前没有数据可用时，就什么都不会获取。而不是保持线程阻塞，所以直至数据变得可以读取之前，该线程可以继续做其他的事情。 非阻塞写也是如此。一个线程请求写入一些数据到某通道，但不需要等待它完全写入，这个线程同时可以去做别的事情。 **线程通常将非阻塞IO的空闲时间用于在其它通道上执行IO操作**，所以一个单独的线程现在可以管理多个输入和输出通道（channel）
+
+![java-nio](http://longls777.oss-cn-beijing.aliyuncs.com/img/java-nio.png)
+
+**AIO (Asynchronous I/O)**
+
+AIO 也就是 NIO 2，Java 7 中引入了 NIO 的改进版 NIO 2，它是异步 IO 模型
+
+异步 IO 是基于事件和回调机制实现的，也就是应用操作之后会直接返回，不会堵塞在那里，当后台处理完成，操作系统会通知相应的线程进行后续的操作
+
+![异步IO](http://longls777.oss-cn-beijing.aliyuncs.com/img/异步IO.png)
+
+![三种IO的比较](http://longls777.oss-cn-beijing.aliyuncs.com/img/三种IO的比较.png)
+
+**2. 如何理解NIO同步和AIO异步？**
+
+虽然NIO在网络操作中提供了非阻塞的方法，但是NIO的IO行为还是同步的，对于NIO来说，业务线程是在IO操作准备好时，得到通知，接着就由这个线程自行进行I/O操作，这个I/O操作本身是同步的
+
+**3. 如何理解阻塞非阻塞和同步异步？**
+
+《操作系统概念（第九版）》中有关进程间通信的部分：
+
+进程间的通信是通过 send() 和 receive() 两种基本操作完成的。具体如何实现这两种基础操作，存在着不同的设计。 消息的传递有可能是阻塞的或非阻塞的 – 也被称为同步或异步的
+
+也就是说， 从进程级通信的维度讨论时， 阻塞和同步（非阻塞和异步）就是一对同义词， 且需要针对发送方和接收方作区分对待。
+
+但是也有一些别的解释，比如：
+
+**同步/异步关注的是消息通知的机制，而阻塞/非阻塞关注的是程序（线程）等待消息通知时的状态**
+
+
+
+# 十一、序列化和反序列化
+
+**1. 说说序列化和反序列化？**
+
+- 序列化： 将数据结构或对象转换成二进制字节流的过程
+- 反序列化：将在序列化过程中所生成的二进制字节流的过程转换成数据结构或者对象的过程
+- 序列化对象的引用类型成员变量也必须是可序列化的
+- 反序列化必须有序列化对象的class文件
+- 同一对象序列化多次，只有第一次序列化为二进制流，以后都只是保存序列化编号，不会重复序列化
+
+**2. Java 序列化中如果有些字段不想进行序列化，怎么办？**
+
+对于不想进行序列化的变量，使用transient关键字修饰。
+
+transient 关键字的作用是：阻止实例中那些用此关键字修饰的的变量序列化；当对象被反序列化时，被 transient 修饰的变量值不会被持久化和恢复。transient 只能修饰变量，不能修饰类和方法。
+
+
+
+# 十二、String
+
+**1. 说说String？**
+
+- String 被声明为 final，因此它不可被继承
+- 在 Java 8 中，String 内部使用 char 数组存储数据
+- 在 Java 9 之后，String 类的实现改用 byte 数组存储字符串，同时使用 coder 来标识使用了哪种编码
+- value 数组被声明为 final，这意味着 value 数组初始化之后就不能再引用其它数组。并且 String 内部没有改变 value 数组的方法，因此可以保证 String 不可变
+
+**2. String为什么要用final修饰？**
+
+- 如果一个 String 对象已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool，大量使用字符串的情况下，String Pool 可以节省内存空间，提高效率
+- 因为 String 的 hash 值经常被使用，例如 String 用做 HashMap 的 key。不可变的特性可以使得 hash 值也不可变，因此只需要进行一次计算
+- 为了线程安全
+
+> https://www.zhihu.com/question/31345592
+
+**3. 说说StringBuffer和StringBuilder？**
+
+1. 可变性
+
+- String 不可变
+- StringBuffer 和 StringBuilder 可变
+
+2. 线程安全
+
+- String 不可变，因此是线程安全的
+- StringBuilder 不是线程安全的
+- StringBuffer 是线程安全的，内部使用 synchronized 进行同步
+
+**4. 说说字符串常量池？**
+
+字符串常量池（String Pool）保存着所有字符串字面量（literal strings），这些字面量在编译时期就确定。不仅如此，还可以使用 String 的 intern() 方法在运行过程将字符串添加到 String Pool 中
+
+当一个字符串调用 intern() 方法时，如果 String Pool 中已经存在一个字符串和该字符串值相等（使用 equals() 方法进行确定），那么就会返回 String Pool 中字符串的引用；否则，就会在 String Pool 中添加一个新的字符串，并返回这个新字符串的引用
+
+下面示例中，s1 和 s2 采用 new String() 的方式新建了两个不同字符串，而 s3 和 s4 是通过 s1.intern() 和 s2.intern() 方法取得同一个字符串引用。intern() 首先把 "aaa" 放到 String Pool 中，然后返回这个字符串引用，因此 s3 和 s4 引用的是同一个字符串。
+
+```java
+String s1 = new String("aaa");
+String s2 = new String("aaa");
+System.out.println(s1 == s2);           // false
+String s3 = s1.intern();
+String s4 = s2.intern();
+System.out.println(s3 == s4);           // true
+```
+
+如果是采用 "bbb" 这种字面量的形式创建字符串，会自动地将字符串放入 String Pool 中
+
+```java
+String s5 = "bbb";
+String s6 = "bbb";
+System.out.println(s5 == s6);  // true
+```
+
+在 Java 7 之前，String Pool 被放在运行时常量池中，它属于永久代。而在 Java 7，String Pool 被移到堆中。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误
+
