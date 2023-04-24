@@ -25,6 +25,10 @@ math: true
   - [142. 环形链表 II](https://leetcode.cn/problems/linked-list-cycle-ii/) 
   - [83. 删除排序链表中的重复元素](https://leetcode.cn/problems/remove-duplicates-from-sorted-list/)
 
+- [25. K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/description/)
+
+
+
 
 
 
@@ -39,6 +43,11 @@ math: true
   - [344. 反转字符串](https://leetcode.cn/problems/reverse-string/)
   - [5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/)(dp also)
 
+- [215. 数组中的第K个最大元素](https://leetcode.cn/problems/kth-largest-element-in-an-array/description/)
+- [15. 三数之和](https://leetcode.cn/problems/3sum/description/)
+
+
+
 
 
 ## 二叉树
@@ -52,6 +61,7 @@ math: true
 ## 动态规划
 
 - [322. 零钱兑换](https://leetcode.cn/problems/coin-change/description/)
+- [53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/description/)
 
 
 
@@ -151,4 +161,28 @@ int right_bound(int[] nums, int target) {
 - [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/description/)
 - [76. 最小覆盖子串](https://leetcode.cn/problems/minimum-window-substring/description/)
 - [438. 找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/description/)
+
+
+
+## 设计
+
+- [146. LRU 缓存](https://leetcode.cn/problems/lru-cache/description/)
+
+
+
+## 排序
+
+- [912. 排序数组](https://leetcode.cn/problems/sort-an-array/description/)
+
+
+
+## codetop
+
+- [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/description/)
+- [206. 反转链表](https://leetcode.cn/problems/reverse-linked-list/description/)
+- [146. LRU 缓存](https://leetcode.cn/problems/lru-cache/description/)
+- [215. 数组中的第K个最大元素](https://leetcode.cn/problems/kth-largest-element-in-an-array/description/)
+- [25. K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/description/)
+- [15. 三数之和](https://leetcode.cn/problems/3sum/description/)
+- [53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/description/)
 - 
