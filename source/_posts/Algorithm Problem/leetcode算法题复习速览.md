@@ -44,9 +44,10 @@ math: true
   - [5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/)(dp also)
 
 - [215. 数组中的第K个最大元素](https://leetcode.cn/problems/kth-largest-element-in-an-array/description/)
+
 - [15. 三数之和](https://leetcode.cn/problems/3sum/description/)
 
-
+- [1. 两数之和](https://leetcode.cn/problems/two-sum/description/)
 
 
 
@@ -55,6 +56,9 @@ math: true
 - [104. 二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/description/)
 - [144. 二叉树的前序遍历](https://leetcode.cn/problems/binary-tree-preorder-traversal/description/)
 - [543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/description/)
+- [102. 二叉树的层序遍历](https://leetcode.cn/problems/binary-tree-level-order-traversal/description/)
+
+
 
 
 
@@ -153,6 +157,11 @@ int right_bound(int[] nums, int target) {
 
 - [34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/description/)
 - [704. 二分查找](https://leetcode.cn/problems/binary-search/description/)
+- [33. 搜索旋转排序数组](https://leetcode.cn/problems/search-in-rotated-sorted-array/description/)
+
+
+
+
 
 
 
@@ -175,14 +184,3 @@ int right_bound(int[] nums, int target) {
 - [912. 排序数组](https://leetcode.cn/problems/sort-an-array/description/)
 
 
-
-## codetop
-
-- [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/description/)
-- [206. 反转链表](https://leetcode.cn/problems/reverse-linked-list/description/)
-- [146. LRU 缓存](https://leetcode.cn/problems/lru-cache/description/)
-- [215. 数组中的第K个最大元素](https://leetcode.cn/problems/kth-largest-element-in-an-array/description/)
-- [25. K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/description/)
-- [15. 三数之和](https://leetcode.cn/problems/3sum/description/)
-- [53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/description/)
-- 

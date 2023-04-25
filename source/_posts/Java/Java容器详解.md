@@ -8,8 +8,6 @@ banner_img:
 math: true
 ---
 
-1
-
 # 一、概览
 
 ![Java集合框架图](http://longls777.oss-cn-beijing.aliyuncs.com/img/Java集合框架图.png)
