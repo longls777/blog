@@ -27,7 +27,7 @@ math: true
 
 - [25. K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/description/)
 
-
+- [92. 反转链表 II](https://leetcode.cn/problems/reverse-linked-list-ii/description/)
 
 
 
@@ -42,6 +42,7 @@ math: true
   - [167. 两数之和 II - 输入有序数组](https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/)
   - [344. 反转字符串](https://leetcode.cn/problems/reverse-string/)
   - [5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/)(dp also)
+  - [88. 合并两个有序数组](https://leetcode.cn/problems/merge-sorted-array/description/)
 
 - [215. 数组中的第K个最大元素](https://leetcode.cn/problems/kth-largest-element-in-an-array/description/)
 
@@ -57,8 +58,8 @@ math: true
 - [144. 二叉树的前序遍历](https://leetcode.cn/problems/binary-tree-preorder-traversal/description/)
 - [543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/description/)
 - [102. 二叉树的层序遍历](https://leetcode.cn/problems/binary-tree-level-order-traversal/description/)
-
-
+- [103. 二叉树的锯齿形层序遍历](https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/description/)
+- [236. 二叉树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/description/)
 
 
 
@@ -66,6 +67,8 @@ math: true
 
 - [322. 零钱兑换](https://leetcode.cn/problems/coin-change/description/)
 - [53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/description/)
+- [121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/description/)
+- 
 
 
 
@@ -92,74 +95,18 @@ math: true
 
 
 
-## 搜索
+## DFS
 
-```java
-//搜索单个数
-int binary_search(int[] nums, int target) {
-    int left = 0, right = nums.length - 1; 
-    while(left <= right) {
-        int mid = left + (right - left) / 2;
-        if (nums[mid] < target) {
-            left = mid + 1;
-        } else if (nums[mid] > target) {
-            right = mid - 1; 
-        } else if(nums[mid] == target) {
-            // 直接返回
-            return mid;
-        }
-    }
-    // 直接返回
-    return -1;
-}
-//搜索左区间
-int left_bound(int[] nums, int target) {
-    int left = 0, right = nums.length - 1;
-    // 搜索区间为 [left, right]
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-        if (nums[mid] < target) {
-            // 搜索区间变为 [mid+1, right]
-            left = mid + 1;
-        } else if (nums[mid] > target) {
-            // 搜索区间变为 [left, mid-1]
-            right = mid - 1;
-        } else if (nums[mid] == target) {
-            // 收缩右侧边界
-            right = mid - 1;
-        }
-    }
-    // 判断 target 是否存在于 nums 中
-    // 此时 target 比所有数都大，返回 -1
-    if (left == nums.length) return -1;
-    // 判断一下 nums[left] 是不是 target
-    return nums[left] == target ? left : -1;
-}
-//搜索右区间
-int right_bound(int[] nums, int target) {
-    int left = 0, right = nums.length - 1;
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-        if (nums[mid] < target) {
-            left = mid + 1;
-        } else if (nums[mid] > target) {
-            right = mid - 1;
-        } else if (nums[mid] == target) {
-            // 这里改成收缩左侧边界即可
-            left = mid + 1;
-        }
-    }
-    // 最后改成返回 left - 1
-    if (left - 1 < 0) return -1;
-    return nums[left - 1] == target ? (left - 1) : -1;
-}
-```
+- [200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/description/)
+
+
+
+## 搜索
 
 - [34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/description/)
 - [704. 二分查找](https://leetcode.cn/problems/binary-search/description/)
 - [33. 搜索旋转排序数组](https://leetcode.cn/problems/search-in-rotated-sorted-array/description/)
-
-
+- []()
 
 
 
@@ -184,3 +131,22 @@ int right_bound(int[] nums, int target) {
 - [912. 排序数组](https://leetcode.cn/problems/sort-an-array/description/)
 
 
+
+## 栈
+
+- [20. 有效的括号](https://leetcode.cn/problems/valid-parentheses/description/)
+- 
+
+
+
+## 并查集
+
+- [1971. 寻找图中是否存在路径](https://leetcode.cn/problems/find-if-path-exists-in-graph/description/)
+- 
+
+
+
+## 其他
+
+- [54. 螺旋矩阵](https://leetcode.cn/problems/spiral-matrix/description/)
+- 
