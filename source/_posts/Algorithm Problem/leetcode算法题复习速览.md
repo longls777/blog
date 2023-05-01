@@ -4,6 +4,7 @@ date: 2023-3-21 13:42:00
 tags: 
 categories: Algorithm Problem
 math: true
+sticky: 888
 ---
 
 > https://github.com/labuladong/fucking-algorithm
@@ -24,10 +25,13 @@ math: true
   - [141.环形链表](https://leetcode.cn/problems/linked-list-cycle/)
   - [142. 环形链表 II](https://leetcode.cn/problems/linked-list-cycle-ii/) 
   - [83. 删除排序链表中的重复元素](https://leetcode.cn/problems/remove-duplicates-from-sorted-list/)
+  - [143. 重排链表](https://leetcode.cn/problems/reorder-list/)
 
 - [25. K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/description/)
 
 - [92. 反转链表 II](https://leetcode.cn/problems/reverse-linked-list-ii/description/)
+
+- [23. 合并 K 个升序链表](https://leetcode.cn/problems/merge-k-sorted-lists/description/)（优先级队列）
 
 
 
@@ -43,6 +47,7 @@ math: true
   - [344. 反转字符串](https://leetcode.cn/problems/reverse-string/)
   - [5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/)(dp also)
   - [88. 合并两个有序数组](https://leetcode.cn/problems/merge-sorted-array/description/)
+  - [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
 
 - [215. 数组中的第K个最大元素](https://leetcode.cn/problems/kth-largest-element-in-an-array/description/)
 
@@ -68,7 +73,7 @@ math: true
 - [322. 零钱兑换](https://leetcode.cn/problems/coin-change/description/)
 - [53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/description/)
 - [121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/description/)
-- 
+- **[300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)**
 
 
 
@@ -112,11 +117,15 @@ math: true
 
 
 
-## 滑动窗口
+## 字符串
 
-- [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/description/)
-- [76. 最小覆盖子串](https://leetcode.cn/problems/minimum-window-substring/description/)
-- [438. 找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/description/)
+- **双指针**
+  - [415. 字符串相加](https://leetcode.cn/problems/add-strings/description/)
+
+- **滑动窗口**
+  - [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/description/)
+  - [76. 最小覆盖子串](https://leetcode.cn/problems/minimum-window-substring/description/)
+  - [438. 找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/description/)
 
 
 
