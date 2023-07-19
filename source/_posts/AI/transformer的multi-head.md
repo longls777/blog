@@ -1,7 +1,7 @@
 ---
 title: Transformer为什么使用Multi-Head？
 tags: transformer
-categories: Machine Learning
+categories: AI
 date: 2022-09-15 19:19:30
 index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20220915201320897.png
 banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20220915201320897.png
