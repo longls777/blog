@@ -11,8 +11,12 @@ math: true
 > https://github.com/karpathy/minGPT
 >
 > https://zhuanlan.zhihu.com/p/412351920
->
-> 来自特斯拉AI总监Karpathy写的一个开源的minGPT代码，仅仅用了300行便实现了GPT的核心架构
+
+
+
+来自特斯拉AI总监Karpathy写的一个开源的minGPT代码，仅仅用了300行便实现了GPT的核心架构
+
+以注释的方式解读
 
 ```python
 """
@@ -52,7 +56,7 @@ class CausalSelfAttention(nn.Module):
 
     def __init__(self, config):
         super().__init__()
-        assert config.n_embd % config.n_head == 0
+        assert config.n_embd % config.n_head == 0 # embedding dim 应该是head的整数倍
         # key, query, value projections for all heads, but in a batch
         self.c_attn = nn.Linear(config.n_embd, 3 * config.n_embd)
         # output projection
@@ -63,29 +67,39 @@ class CausalSelfAttention(nn.Module):
         # causal mask to ensure that attention is only applied to the left in the input sequence
         self.register_buffer("bias", torch.tril(torch.ones(config.block_size, config.block_size))
                                      .view(1, 1, config.block_size, config.block_size))
+        # 下三角矩阵，实现因果遮罩（Causal Mask）
         self.n_head = config.n_head
         self.n_embd = config.n_embd
 
     def forward(self, x):
+        # x [batch_size, seq_length, embedding_dim] = [1, 512, 768]
         B, T, C = x.size() # batch size, sequence length, embedding dimensionality (n_embd)
 
         # calculate query, key, values for all heads in batch and move head forward to be the batch dim
         q, k ,v  = self.c_attn(x).split(self.n_embd, dim=2)
+        # [1, 512, 768] -> [1, 512, 3*768] -> 3 * [1, 512, 768]
+        
         k = k.view(B, T, self.n_head, C // self.n_head).transpose(1, 2) # (B, nh, T, hs)
         q = q.view(B, T, self.n_head, C // self.n_head).transpose(1, 2) # (B, nh, T, hs)
         v = v.view(B, T, self.n_head, C // self.n_head).transpose(1, 2) # (B, nh, T, hs)
-
+        # [1, 512, n_head, 768 // n_head] = [1, 512, 8, 96] -> [1, 8, 512, 96]
+        # 这样做的目的是使得注意力计算可以并行在每个注意力头上进行，从而提高计算效率
+        
         # causal self-attention; Self-attend: (B, nh, T, hs) x (B, nh, hs, T) -> (B, nh, T, T)
-        att = (q @ k.transpose(-2, -1)) * (1.0 / math.sqrt(k.size(-1)))
+        # [1, 8, 512, 96] x [1, 8, 96, 512] -> [1, 8, 512, 512]
+        att = (q @ k.transpose(-2, -1)) * (1.0 / math.sqrt(k.size(-1)))# d_k = hs = 96
         att = att.masked_fill(self.bias[:,:,:T,:T] == 0, float('-inf'))
+        # 将被maks的区域（右上三角）置为负无穷（softmax时结果为0）
         att = F.softmax(att, dim=-1)
         att = self.attn_dropout(att)
         y = att @ v # (B, nh, T, T) x (B, nh, T, hs) -> (B, nh, T, hs)
         y = y.transpose(1, 2).contiguous().view(B, T, C) # re-assemble all head outputs side by side
+        # [1, 8, 512, 96] -> [1, 512, 8, 96] -> [1, 512, 768]
 
         # output projection
-        y = self.resid_dropout(self.c_proj(y))
+        y = self.resid_dropout(self.c_proj(y)) # 投影变换 + dropout
         return y
+        # 好像没有残差连接呀
 
 class Block(nn.Module):
     """ an unassuming Transformer block """
@@ -105,8 +119,9 @@ class Block(nn.Module):
         self.mlpf = lambda x: m.dropout(m.c_proj(m.act(m.c_fc(x)))) # MLP forward
 
     def forward(self, x):
-        x = x + self.attn(self.ln_1(x))
-        x = x + self.mlpf(self.ln_2(x))
+        # 残差连接在这里_OvO_
+        x = x + self.attn(self.ln_1(x)) # gpt2 与 gpt1的一大区别就是LN层放到了att之前
+        x = x + self.mlpf(self.ln_2(x)) # LN层放到了FFN之前，类似于ResNet的pre-activation
         return x
 
 class GPT(nn.Module):
@@ -163,16 +178,19 @@ class GPT(nn.Module):
             wpe = nn.Embedding(config.block_size, config.n_embd),
             drop = nn.Dropout(config.embd_pdrop),
             h = nn.ModuleList([Block(config) for _ in range(config.n_layer)]),
-            ln_f = nn.LayerNorm(config.n_embd),
+            ln_f = nn.LayerNorm(config.n_embd), # gpt2相对于gpt1的另一改动，给最后一层输出用一个LN
         ))
+
         self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
+        # 作用是将模型最后的隐藏状态转换为对每个词汇表单词的预测概率分布
 
         # init all weights, and apply a special scaled init to the residual projections, per GPT-2 paper
         self.apply(self._init_weights)
         for pn, p in self.named_parameters():
             if pn.endswith('c_proj.weight'):
                 torch.nn.init.normal_(p, mean=0.0, std=0.02/math.sqrt(2 * config.n_layer))
-
+        # 使用了修改后的初始化，该初始化考虑了残差路径上随模型深度的累积（from gpt2 paper）
+        
         # report number of parameters (note we don't count the decoder parameters in lm_head)
         n_params = sum(p.numel() for p in self.transformer.parameters())
         print("number of parameters: %.2fM" % (n_params/1e6,))
@@ -278,6 +296,7 @@ class GPT(nn.Module):
         device = idx.device
         b, t = idx.size()
         assert t <= self.block_size, f"Cannot forward sequence of length {t}, block size is only {self.block_size}"
+        # block_size 也就是max_seq_length
         pos = torch.arange(0, t, dtype=torch.long, device=device).unsqueeze(0) # shape (1, t)
 
         # forward the GPT model itself
@@ -286,7 +305,7 @@ class GPT(nn.Module):
         x = self.transformer.drop(tok_emb + pos_emb)
         for block in self.transformer.h:
             x = block(x)
-        x = self.transformer.ln_f(x)
+        x = self.transformer.ln_f(x)# gpt2最后加的那层LN（gpt1没有）
         logits = self.lm_head(x)
 
         # if we are given some desired targets also calculate the loss
@@ -310,6 +329,11 @@ class GPT(nn.Module):
             logits, _ = self(idx_cond)
             # pluck the logits at the final step and scale by desired temperature
             logits = logits[:, -1, :] / temperature
+            # 温度是一个控制生成文本多样性的超参数，
+            # 较高的温度使得概率分布的值变得更加平缓，更多的token会有相对较高的概率，而较小的概率也有一定机会被选中
+            # 较低的温度会增加概率分布中的峰值可以使得概率分布的值更加集中，只有最大概率的token会被选中，而较小概率的token几乎没有机会被选中
+            # 因此较高的温度会产生更加随机的输出，而较低的温度会产生更加确定性的输出
+            
             # optionally crop the logits to only the top k options
             if top_k is not None:
                 v, _ = torch.topk(logits, top_k)
@@ -317,6 +341,8 @@ class GPT(nn.Module):
             # apply softmax to convert logits to (normalized) probabilities
             probs = F.softmax(logits, dim=-1)
             # either sample from the distribution or take the most likely element
+            # 根据参数do_sample，决定是从概率分布中采样一个token，还是选择概率最高的token
+            # 可以控制生成文本的多样性和生成的质量
             if do_sample:
                 idx_next = torch.multinomial(probs, num_samples=1)
             else:
@@ -325,5 +351,6 @@ class GPT(nn.Module):
             idx = torch.cat((idx, idx_next), dim=1)
 
         return idx
+
 ```
 
