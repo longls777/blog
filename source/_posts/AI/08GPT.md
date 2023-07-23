@@ -3,14 +3,18 @@ title: GPT2核心结构解读
 tags: 
 categories: AI
 date: 2023-7-22 15:30:00
-index_img:
-banner_img:
+index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230723191018072.png
+banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230723191018072.png
 math: true
 ---
 
 > https://github.com/karpathy/minGPT
 >
-> https://zhuanlan.zhihu.com/p/412351920
+> GPT系列论文阅读笔记 - 中森的文章 - 知乎 https://zhuanlan.zhihu.com/p/412351920
+
+
+
+![GPT-1架构，GPT-2与之类似，略有改动](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230723191018072.png)
 
 
 
@@ -174,8 +178,8 @@ class GPT(nn.Module):
             }[config.model_type])
 
         self.transformer = nn.ModuleDict(dict(
-            wte = nn.Embedding(config.vocab_size, config.n_embd),
-            wpe = nn.Embedding(config.block_size, config.n_embd),
+            wte = nn.Embedding(config.vocab_size, config.n_embd),# 学习词嵌入，比如[30000, 768]的参数矩阵
+            wpe = nn.Embedding(config.block_size, config.n_embd),# 学习位置嵌入，比如[512, 768]的参数矩阵
             drop = nn.Dropout(config.embd_pdrop),
             h = nn.ModuleList([Block(config) for _ in range(config.n_layer)]),
             ln_f = nn.LayerNorm(config.n_embd), # gpt2相对于gpt1的另一改动，给最后一层输出用一个LN
