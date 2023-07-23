@@ -8,4 +8,45 @@ banner_img:
 math: true
 ---
 
-> https://zhuanlan.zhihu.com/p/407057126
+> Byte Pair Encoding \<Neural Machine Translation of Rare Words with Subword Units\> 阅读笔记 - 中森的文章 - 知乎 https://zhuanlan.zhihu.com/p/407057126
+>
+> [Neural Machine Translation with Byte-Level Subwords](https://arxiv.org/abs/1909.03341)
+
+
+
+一般来说在该文章和类似方法提出前，自然语言处理对未登录词（即训练文本中从未出现过的词）的处理（如用一个统一的UNK标签向量表示所有未登录词）一般较为不理想。于是自然而然地，人们思考可不可以把每个单词拆分成更小的单位形成sub-word unit次单词单元。该文章的贡献便在于验证了该想法的可行性并修改了BPE，一种94年提出的数据压缩算法，来实现次于词层面的单词分割任务。
+
+值得注意的是，大部分字母类的文字如英语都可以拆分成形素（morpheme，如"un-"，"break"，and "-able" in the word "unbreakable"）和音素（phoneme），因此拆成类似元素后，再遇到新的词的时候可以由该次单词单元拼接而成。
+
+
+
+## BPE
+
+每个单词将首先转化为逐个字母分割的形式（单词尾会额外加上一个分割符号），随后统计每个字母和前面或后面字母的共现次数（所以叫字节对），对最常见的字母对，我们将其合并，并重新计算字母共现频率。重复该操作直到预先设定的超参数合并次数用尽或设定的词库大小达到为止。
+
+下图是该算法的简单python实现：
+
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/v2-fae243b0f476ded326c38d7e752c07d7_720w.webp)
+
+- `p = re.compile(r'(?<!\S)' + bigram + r'(?!\S)')` 这行代码的作用是创建一个正则表达式对象 `p`，用于匹配包含合并符号对 `bigram` 的字符串，并且这个符号对的前后不能有其他非空白字符
+- `p.sub()` 方法用于在字符串中执行替换操作，将匹配正则表达式模式的部分替换为指定的字符串
+
+> GPT模型便用了478个基准字节（base character）, 在40000次融合后得到40,478的词库大小
+
+## 字节级字节对编码（byte-level BPE）
+
+参考GPT-2论文的解释，即将基准字节设为每一字节可表示的256个不同可能，并在此基础上融合最终获得字节级的分词结果，hugging face里原文如下：
+
+> Byte-level BPE
+> A base vocabulary that includes all possible base characters can be quite large if *e.g.* all unicode characters are considered as base characters. To have a better base vocabulary, [GPT-2](https://link.zhihu.com/?target=https%3A//cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) uses bytes as the base vocabulary, which is a clever trick to force the base vocabulary to be of size 256 while ensuring that every base character is included in the vocabulary. With some additional rules to deal with punctuation, the GPT2’s tokenizer can tokenize every text without the need for the <unk> symbol. [GPT-2](https://link.zhihu.com/?target=https%3A//huggingface.co/transformers/model_doc/gpt.html) has a vocabulary size of 50,257, which corresponds to the 256 bytes base tokens, a special end-of-text token and the symbols learned with 50,000 merges.
+
+即使用unicode字符当最小单元的话，基础字符会特别多（130000起步），而使用一个字节的所有可能（256），就可以避免生成过于庞大的单词库
+
+
+
+## 总结
+
+无论是普通的BPE还是字节级的BPE都是现在NLP学界常用的分词基础。它能非常良好地缓解/解决未登录词的问题。**但是这对中文来说不一定是一种好的分词方法。** 中文直接用字或词的粒度去分词就可以了。
+
+
+
