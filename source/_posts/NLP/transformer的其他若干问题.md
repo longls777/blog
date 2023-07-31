@@ -1,7 +1,7 @@
 ---
 title: Transformer相关问题
 tags: transformer
-categories: AI
+categories: NLP
 date: 2022-09-15 21:20:30
 index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20220915212106860.png
 banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20220915212309079.png

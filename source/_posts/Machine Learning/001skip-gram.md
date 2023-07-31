@@ -1,7 +1,7 @@
 ---
 title: skip-gram详解
 tags: nlp
-categories: AI
+categories: Machine Learning
 date: 2022-07-03 9:45:30
 index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/20201223170652487.png
 banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/20201223170652487.png
