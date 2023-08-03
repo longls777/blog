@@ -2,7 +2,7 @@
 title: word2vec
 tags: 八股
 categories: NLP
-date: 2022-08-02 13:06:30
+date: 2023-08-02 13:06:30
 index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/v2-35339b4e3efc29326bad70728e2f469c_1440w.webp
 banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/v2-35339b4e3efc29326bad70728e2f469c_1440w.webp
 math: true
