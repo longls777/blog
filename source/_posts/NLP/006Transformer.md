@@ -277,8 +277,156 @@ embedding matrix的初始化方式是xavier init，这种方式的方差是1/emb
 >
 > [让研究人员绞尽脑汁的Transformer位置编码](https://kexue.fm/archives/8130)  膜拜，这个还没看，aaron有空记得看！！！！！
 >
-> https://zhuanlan.zhihu.com/p/105001610 还有这个，因为他们说面试不会问的这么仔细所以暂时先不看了555
+> Transformer改进之相对位置编码(RPE) - Taylor Wu的文章 - 知乎 https://zhuanlan.zhihu.com/p/105001610 还有这个，因为他们说面试不会问的这么仔细所以暂时先不看了555
 
 
 
-未完待续...
+## 九、简单讲一下Transformer中的残差结构以及意义
+
+就是ResNet的优点，解决梯度消失
+
+
+
+## 十、为什么transformer块使用LayerNorm而不是BatchNorm？LayerNorm在Transformer的位置是哪里？
+
+> transformer 为什么使用 layer normalization，而不是其他的归一化方法？ - 知乎 https://www.zhihu.com/question/395811291
+
+
+
+首先有一个default的操作就是CV用BN，NLP用LN
+
+**一种说法是NLP任务本身就不适合用BN，而适合用LN**
+
+> BN是对batch的维度去做归一化，也就是针对不同样本的同一特征做操作。
+>
+> LN是对hidden的维度去做归一化，也就是针对单个样本的不同特征做操作。
+>
+> 那为啥NLP里为啥不用BN做归一化呢？我觉得有两个原因：
+>
+> 1. 也就是很多人提到的NLP里面，每个样本（比如句子）序列的长度是不一样的，所以不好搞成batch的形式。
+> 2. 就算强行把每个序列的长度弄成一样，那么就有batch这个维度了。如果我对两个句子（我爱吃炸鸡，今天很开心）每一个词去做归一化，那么比如我和今，爱和天是分别对应同一个特征维度，这样明显是不make sense的。
+>
+> 
+>
+> transformer 为什么使用 layer normalization，而不是其他的归一化方法？ - BelindaL的回答 - 知乎 https://www.zhihu.com/question/395811291/answer/1494909394
+
+> **LN特别适合处理变长数据，因为是对channel维度做操作(这里指NLP中的hidden维度)，和句子长度和batch大小无关**
+>
+> 
+>
+> 为什么Transformer要用LayerNorm？ - Gordon Lee的回答 - 知乎 https://www.zhihu.com/question/487766088/answer/2422936310
+
+
+
+**还有说法是LN更适合大模型训练**
+
+> 在训练大模型时，一般都是 multi-node distributed training，分在一个 GPU 上的 batch size 很小，这可能会影响 model with batch-norm 的精度。相比之下 layer-norm 是 batch 无关的，因此更适合大模型的训练。
+>
+> 
+>
+> 为什么Transformer要用LayerNorm？ - JoJoJoJoya的回答 - 知乎 https://www.zhihu.com/question/487766088/answer/2608349938
+
+
+
+**还有从梯度传播的角度**
+
+> 一方面通过使得前向传播的输入分布变得稳定；另外一方面，使得后向的梯度更加稳定。二者相比，梯度带来的效果更加明显一些。再和之前 rethinking 那篇文章结合起来看，mean 和 [bias](https://www.zhihu.com/search?q=bias&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"answer"%2C"sourceId"%3A1257894378}) 带来的梯度对于 Transformer 模型的训练很重要，所以需要好的一个 [estimation](https://www.zhihu.com/search?q=estimation&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"answer"%2C"sourceId"%3A1257894378})，而 Batch Normalization 无法提供较好的一个估计，从而造成不太 work。
+>
+> 
+>
+> transformer 为什么使用 layer normalization，而不是其他的归一化方法？ - Tobias Lee的回答 - 知乎 https://www.zhihu.com/question/395811291/answer/1257894378
+
+**最主要的原因：因为实验结果显示这样做效果更好！**
+
+
+
+#### **LN在Transformer中的位置**
+
+$$
+LayerNorm(x + Sublayer(x))
+$$
+
+
+
+## 十一、简答讲一下BatchNorm技术，以及它的优缺点
+
+**优点**
+
+- 可以解决内部协变量偏移，简单来说训练过程中，各层分布不同，增大了学习难度，BN缓解了这个问题。当然后来也有论文证明BN有作用和这个没关系，而是可以使损失平面更加的平滑，从而加快的收敛速度
+- 缓解了梯度饱和问题（如果使用sigmoid这种含有饱和区间的激活函数的话），加快收敛
+
+**缺点**
+
+- batch_size较小的时候，效果差
+  - 这一点很容易理解。BN的过程，是使用batch中样本的均值和方差来模拟全部数据的均值和方差。在batch_size 较小的时候，模拟出来的肯定效果不好，所以记住，如果你的网络中加入了BN，batch_size最好调参的时候调大点。
+-  BN 在RNN中效果比较差
+  - 这是因为RNN的输入是长度是动态的，就是说每个样本的长度是不一样的
+  - 举个最简单的例子，比如 batch_size 为10，也就是我有10个样本，其中9个样本长度为5，第10个样本长度为20。那么问题来了，前五个单词的均值和方差都可以在这个batch中求出来，但是第6个单词到第20个单词怎么办？
+- 在测试阶段的问题
+  - 首先测试的时候，我们可以在队列里拉一个batch进去进行计算，但是也有情况是来一个必须尽快出来一个，也就是batch为1，这个时候均值和方差怎么办？这个一般是在训练的时候就把均值和方差保存下来，测试的时候直接用就可以。那么选取效果好的均值和方差就是个问题
+  - 其次在测试的时候，遇到一个样本长度为1000的样本，在训练的时候最大长度为600，那么后面400个单词的均值和方差在训练数据没碰到过，这个时候怎么办？这个问题我们一般是在数据处理的时候就会做截断
+  - 还有一个问题就是就是训练集和测试集的均值和方差相差比较大，那么训练集的均值和方差就不能很好的反应你测试数据特性，效果就会差。这个时候就和你的数据处理有关系了
+
+
+
+## 十二、简单描述一下Transformer中的前馈神经网络？使用了什么激活函数？相关优缺点？
+
+前馈神经网络模块由两个线性变换组成，中间有一个ReLU激活函数，对应到公式的形式为：
+$$
+FFN(x)=max(0, xW_1+b_1)W_2+b_2
+$$
+优缺点就是ReLU的优缺点
+
+
+
+## 十三、Encoder端和Decoder端是如何进行交互的？
+
+Cross Self-Attention，Decoder提供Q，Encoder提供K，V
+
+> 多头Encoder-Decoder attention交互模块的形式与多头self-attention模块一致，**唯一不同的是其**$Q，K，V$**矩阵的来源**，其$Q$矩阵来源于下面子模块的输出（对应到图中即为masked多头self-attention模块经过Add & Norm后的输出），而**$K,V$矩阵则来源于整个Encoder端的输出**，仔细想想其实可以发现，这里的交互模块就跟seq2seq with attention中的机制一样，目的就在于让Decoder端的单词（token）给予Encoder端对应的单词（token）**“更多的关注(attention weight)”**
+>
+> 
+>
+> 关于Transformer的若干问题整理记录 - 小白丶的文章 - 知乎 https://zhuanlan.zhihu.com/p/82391768
+
+
+
+## 十四、Decoder阶段的多头自注意力和encoder的多头自注意力有什么区别？（为什么需要decoder自注意力需要进行 sequence mask）
+
+**Decoder端的多头self-attention需要做mask，因为它在预测时，是“看不到未来的序列的”，所以要将当前预测的单词（token）及其之后的单词（token）全部mask掉。**
+
+
+
+## 十五、Transformer的并行化提现在哪个地方？Decoder端可以做并行化吗？
+
+> https://blog.csdn.net/zhuzyibooooo/article/details/126063398
+
+
+
+Encoder侧：模块之间是串行的，一个模块计算的结果做为下一个模块的输入，互相之前有依赖关系。从每个模块的角度来说，注意力层和前馈神经层这两个子模块单独来看都是可以并行的，不同单词之间是没有依赖关系的。
+
+Decoder引入sequence mask就是为了并行化训练，Decoder推理过程没有并行，只能一个一个的解码，很类似于RNN，这个时刻的输入依赖于上一个时刻的输出。
+
+> ![Decoder的并行化](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230803215312223.png)
+>
+> 关于Transformer的若干问题整理记录 - 小白丶的文章 - 知乎 https://zhuanlan.zhihu.com/p/82391768
+
+
+
+## 十六、简单描述一下wordpiece model 和 byte pair encoding（BPE）
+
+传统词表示方法无法很好的处理未知或罕见的词汇（OOV问题），传统词tokenization方法不利于模型学习词缀之间的关系”
+BPE（字节对编码）或二元编码是一种简单的数据压缩形式，其中最常见的一对连续字节数据被替换为该数据中不存在的字节。后期使用时需要一个替换表来重建原始数据。
+优点：可以有效地平衡词汇表大小和步数（编码句子所需的token次数）。
+缺点：基于贪婪和确定的符号替换，不能提供带概率的多个分片结果。
+
+> https://blog.csdn.net/zhuzyibooooo/article/details/126063398
+
+
+
+## 十七、对比Transformer和seq2seq
+
+seq2seq最大的问题在于**将Encoder端的所有信息压缩到一个固定长度的向量中**，并将其作为Decoder端首个隐藏状态的输入，来预测Decoder端第一个单词（token）的隐藏状态。在输入序列比较长的时候，这样做显然会损失Encoder端的很多信息，而且这样一股脑的把该固定向量送入Decoder端，Decoder端不能够关注到其想要关注的信息。上述两点都是seq2seq模型的缺点，后续论文对这两点有所改进，如著名的[Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473)，虽然确确实实对seq2seq模型有了实质性的改进，但是由于主体模型仍然为RNN（LSTM）系列的模型，因此模型的并行能力还是受限，而transformer不但对seq2seq模型这两点缺点有了实质性的改进（多头交互式attention模块），而且还引入了self-attention模块，让源序列和目标序列首先“自关联”起来，这样的话，源序列和目标序列自身的embedding表示所蕴含的信息更加丰富，而且后续的FFN层也增强了模型的表达能力（ACL 2018会议上有论文对Self-Attention和FFN等模块都有实验分析，见论文：[How Much Attention Do You Need?A Granular Analysis of Neural Machine Translation Architectures](https://aclanthology.org/P18-1167/)），并且Transformer并行计算的能力是远远超过seq2seq系列的模型，这是transformer优于seq2seq模型的地方
+
+
+
