@@ -29,7 +29,7 @@ math: true
 
 ## 模型结构
 
-![image-20230804201953936](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230804201953936.png)
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230804201953936.png)
 
 
 
@@ -161,19 +161,13 @@ warmup 需要在训练最初使用较小的学习率来启动，并很快切换�
 
 _____________
 
-
-
-- ![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230804211452946.png)
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230804211452946.png)
 
 _______________
-
-
 
 ![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230804211519405.png)
 
 __________
-
-
 
 ![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230804211546540.png)
 
