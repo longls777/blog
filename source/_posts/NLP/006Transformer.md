@@ -249,6 +249,12 @@ embedding matrix的初始化方式是xavier init，这种方式的方差是1/emb
 
 
 
+实际上有说法是**Transformer中经过attention（主要是其中的线性变换）之后就不含相对位置信息了**，具体可以参考
+
+> Transformer改进之相对位置编码(RPE) - Taylor Wu的文章 - 知乎 https://zhuanlan.zhihu.com/p/105001610
+
+![使用随机线性变换，可以看到相对位置信息已经没有了](http://longls777.oss-cn-beijing.aliyuncs.com/img/v2-a7ae69fb7f380f612305d2633946ad8a_r.jpg)
+
 
 
 > https://blog.csdn.net/zhuzyibooooo/article/details/126063398
@@ -275,9 +281,9 @@ embedding matrix的初始化方式是xavier init，这种方式的方差是1/emb
 
 > https://blog.csdn.net/qq_43391414/article/details/121061766
 >
-> [让研究人员绞尽脑汁的Transformer位置编码](https://kexue.fm/archives/8130)  膜拜，这个还没看，aaron有空记得看！！！！！
+> [让研究人员绞尽脑汁的Transformer位置编码](https://kexue.fm/archives/8130)  这篇写得很详细！
 >
-> Transformer改进之相对位置编码(RPE) - Taylor Wu的文章 - 知乎 https://zhuanlan.zhihu.com/p/105001610 还有这个，因为他们说面试不会问的这么仔细所以暂时先不看了555
+> Transformer改进之相对位置编码(RPE) - Taylor Wu的文章 - 知乎 https://zhuanlan.zhihu.com/p/105001610 
 
 
 
