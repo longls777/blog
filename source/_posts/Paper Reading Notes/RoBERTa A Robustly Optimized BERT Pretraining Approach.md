@@ -45,17 +45,17 @@ RoBERTa：
 
 ### 训练时间更长，batch size更大 
 
-![image-20221007152640133](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20221007152640133.png)
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20221007152640133.png)
 
 在同样运算消耗的条件下，batch-size增大，PPL（困惑度）变小，效果更好
 
-![image-20221007154409170](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20221007154409170.png)
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20221007154409170.png)
 
 可以看到，预训练时间越长，效果越好
 
 ### 移除了next predict loss 
 
-![image-20221007154545994](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20221007154545994.png)
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20221007154545994.png)
 
 可以看出来，没有NSP loss之后，模型的性能匹配甚至略微优于原来的模型
 
@@ -67,7 +67,7 @@ static masking: 原本的BERT采用的是static mask的方式，就是在`create
 
 dynamic masking: 每一次将训练example喂给模型的时候，才进行随机mask
 
-![image-20221007155117023](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20221007155117023.png)
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20221007155117023.png)
 
 ## a larger byte-level BPE
 
