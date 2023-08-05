@@ -3,8 +3,8 @@ title: RoBERTa & ALBERT & ELECTRA
 tags: 八股
 categories: NLP
 date: 2023-08-05 12:43:30
-index_img: 
-banner_img: 
+index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/v2-e4a49c933af91793292ca6ba2e6c08db_r.jpg
+banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/v2-e4a49c933af91793292ca6ba2e6c08db_r.jpg
 math: true
 ---
 
@@ -15,6 +15,10 @@ math: true
 > http://lishilong.xyz/2022/10/06/Paper%20Reading%20Notes/RoBERTa%20A%20Robustly%20Optimized%20BERT%20Pretraining%20Approach/
 >
 > ELECTRA: 超越BERT, 19年最佳NLP预训练模型 - 李rumor的文章 - 知乎 https://zhuanlan.zhihu.com/p/89763176
+>
+> Bert之后，RoBERTa、XLNET、ALBERT、ELECTRA改进对比 - 虹膜小马甲的文章 - 知乎 https://zhuanlan.zhihu.com/p/486532878
+
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/v2-e4a49c933af91793292ca6ba2e6c08db_r.jpg)
 
 
 
