@@ -72,7 +72,7 @@ $$
 
 ![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20220703102002751.png)
 
-![image-20220703102015626](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20220703102015626.png)
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20220703102015626.png)
 
 ![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20220703102035627.png)
 
