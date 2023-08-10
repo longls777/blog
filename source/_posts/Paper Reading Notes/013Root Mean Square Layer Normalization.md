@@ -3,8 +3,8 @@ title: Root Mean Square Layer Normalization
 tags: Normalization
 categories: Paper Reading Notes
 date: 2023-08-09 15:31:00
-index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230810154724678.png
-banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230810154017115.png
+index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230810154017115.png
+banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230810154724678.png
 math: true
 ---
 
