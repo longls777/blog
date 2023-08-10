@@ -12,7 +12,7 @@ math: true
 
 **论文来源：** arXiv:2302.13971
 
-**原文链接： ** https://arxiv.org/pdf/2302.13971.pdf
+**原文链接： **  https://arxiv.org/pdf/2302.13971.pdf
 
 **源码：** https://github.com/facebookresearch/llama
 
@@ -22,9 +22,9 @@ math: true
 
 > https://blog.csdn.net/weixin_44826203/article/details/129255185
 >
-> [为什么Pre Norm的效果不如Post Norm？
+> [为什么Pre Norm的效果不如Post Norm？](https://kexue.fm/archives/9009)
 >
-> [[Transformer升级之路：2、博采众长的旋转式位置编码](https://kexue.fm/archives/8265)](https://kexue.fm/archives/9009)
+> [Transformer升级之路：2、博采众长的旋转式位置编码](https://kexue.fm/archives/9009)
 
 
 

@@ -10,7 +10,7 @@ math: true
 
 **标题：**《RoFormer: Enhanced Transformer with Rotary Position Embedding》
 
-**论文来源：** arXiv:2104.09864
+**论文来源：**  arXiv:2104.09864
 
 **原文链接： ** https://arxiv.org/pdf/2104.09864.pdf
 
