@@ -12,7 +12,7 @@ math: true
 
 **论文来源：**  arXiv:2104.09864
 
-**原文链接： ** https://arxiv.org/pdf/2104.09864.pdf
+**原文链接：** https://arxiv.org/pdf/2104.09864.pdf
 
 **源码：** https://github.com/ZhuiyiTechnology/roformer
 
@@ -29,6 +29,8 @@ math: true
 > [[Transformer升级之路：10、RoPE是一种β进制编码](https://kexue.fm/archives/9675)
 >
 > [[Transformer升级之路：12、无限外推的ReRoPE？](https://kexue.fm/archives/9708)](https://kexue.fm/archives/9009)
+
+
 
 
 

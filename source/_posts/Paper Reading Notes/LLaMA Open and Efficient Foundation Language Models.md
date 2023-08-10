@@ -4,7 +4,7 @@ tags: LLMs
 categories: Paper Reading Notes
 date: 2023-08-09 15:34:00
 index_img: 
-banner_img: 
+banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/Tanganyika_Alpaca_2021_CS2-683x1024.jpg
 math: true
 ---
 
@@ -12,7 +12,7 @@ math: true
 
 **论文来源：** arXiv:2302.13971
 
-**原文链接： **  https://arxiv.org/pdf/2302.13971.pdf
+**原文链接：**  https://arxiv.org/pdf/2302.13971.pdf
 
 **源码：** https://github.com/facebookresearch/llama
 
@@ -31,8 +31,6 @@ math: true
 ## 概述
 
 用的Transformer的decoder，和GPT很类似
-
-
 
 ## 模型细节
 
