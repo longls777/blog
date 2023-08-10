@@ -1,6 +1,6 @@
 ---
 title: ALBERT A LITE BERT FOR SELF-SUPERVISED LEARNING OF LANGUAGE REPRESENTATIONS
-tags: 
+tags: prLMs
 categories: Paper Reading Notes
 date: 2022-10-05 15:46:00
 index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20221006163318194.png
@@ -15,6 +15,8 @@ math: true
 **原文链接：** https://arxiv.org/pdf/1909.11942.pdf
 
 **源码：** https://github.com/google-research/ALBERT
+
+
 
 ## 概述
 

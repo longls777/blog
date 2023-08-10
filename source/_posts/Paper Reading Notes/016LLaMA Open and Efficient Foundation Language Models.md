@@ -36,6 +36,10 @@ math: true
 
 ### RMS Pre-Norm
 
+> https://arxiv.org/pdf/1910.07467.pdf
+
+
+
 首先LLama采用了RMS Norm，是LayerNorm的一种变体，作用是可以在梯度下降时令损失更加平滑，具体细节不讲
 
 
@@ -59,7 +63,7 @@ Pre-Norm和Post-Norm哪个更好呢？[为什么Pre Norm的效果不如Post Norm
 
 ### SwiGLU激活函数
 
-> https://arxiv.org/pdf/1710.05941.pdf
+> https://arxiv.org/pdf/2002.05202.pdf
 
 
 

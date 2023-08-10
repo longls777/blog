@@ -1,6 +1,6 @@
 ---
 title: Deep Residual Learning for Image Recognition
-tags: CV
+tags: 
 categories: Paper Reading Notes
 date: 2022-09-18 20:35:00
 index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20220918203856759.png

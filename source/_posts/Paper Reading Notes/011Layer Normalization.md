@@ -1,6 +1,6 @@
 ---
 title: Layer Normalization
-tags: deep learning
+tags: Normalization
 categories: Paper Reading Notes
 date: 2022-09-19 16:25:00
 index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20220919162755656.png

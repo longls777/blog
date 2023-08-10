@@ -1,6 +1,6 @@
 ---
 title: RoFormer - Enhanced Transformer with Rotary Position Embedding
-tags: LLMs
+tags: Position Embedding
 categories: Paper Reading Notes
 date: 2023-08-09 16:46:00
 index_img: 

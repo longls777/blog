@@ -8,8 +8,6 @@ banner_img:
 math: true
 ---
 
-1
-
 **标题：**《Causal Inference in Natural Language Processing: Estimation, Prediction, Interpretation and Beyond》
 
 **论文来源：** TACL 2022

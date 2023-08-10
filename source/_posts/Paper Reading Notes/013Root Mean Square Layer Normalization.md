@@ -1,6 +1,6 @@
 ---
 title: Root Mean Square Layer Normalization
-tags: 
+tags: Normalization
 categories: Paper Reading Notes
 date: 2023-08-09 15:31:00
 index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230810154724678.png
