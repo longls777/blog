@@ -3,8 +3,8 @@ title: LLaMA - Open and Efficient Foundation Language Models
 tags: LLMs
 categories: Paper Reading Notes
 date: 2023-08-09 15:34:00
-index_img: 
-banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/Tanganyika_Alpaca_2021_CS2-683x1024.jpg
+index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/Tanganyika_Alpaca_2021_CS2-683x1024.jpg
+banner_img: 
 math: true
 ---
 
