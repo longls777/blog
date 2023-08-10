@@ -1,7 +1,7 @@
 ---
 title: GELU激活函数
 tags: 
-categories: Deep Learning
+categories: NLP
 date: 2023-7-22 20:51:00
 index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/v2-45d6312c444b7548558132cea30e3808_720w.webp
 banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/v2-45d6312c444b7548558132cea30e3808_720w.webp
