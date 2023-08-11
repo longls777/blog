@@ -4,7 +4,6 @@ date: 2023-3-21 13:42:00
 tags: 
 categories: Algorithm Problem
 math: true
-sticky: 888
 ---
 
 > https://github.com/labuladong/fucking-algorithm
