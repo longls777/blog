@@ -1,6 +1,5 @@
 ---
-title: BART Denoising Sequence-to-Sequence Pre-training for Natural
-Language Generation, Translation, and Comprehension
+title: BART Denoising Sequence-to-Sequence Pre-training for Natural Language Generation, Translation, and Comprehension
 tags: prLMs
 categories: Paper Reading Notes
 date: 2023-08-12 16:29:00
