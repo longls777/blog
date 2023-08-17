@@ -2,11 +2,10 @@
 title: LORA - LOW-RANK ADAPTATION OF LARGE LANGUAGE MODELS
 tags: fine tuning
 categories: Paper Reading Notes
-date: 2023-08-12 16:45:00
+date: 2023-08-17 19:19:00
 index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230812164721483.png
 banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230812164721483.png
 math: true
-hide: true
 ---
 
 **标题：**《LORA: LOW-RANK ADAPTATION OF LARGE LANGUAGE MODELS》
