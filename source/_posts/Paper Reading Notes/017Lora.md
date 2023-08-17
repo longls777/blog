@@ -34,11 +34,11 @@ math: true
 
 
 
-有研究表明学习到的过参数化的模型实际上建立在低秩维度上，因此LORA假设模型权重在微调的过程中也有一个较低的内在维度
+有研究表明学习到的过参数化的模型实际上建立在低秩维度上，因此LoRA假设模型权重在微调的过程中也有一个较低的内在维度
 
-LORA是在神经网络中直接训练一些dense层来拟合LLM微调过程中的**秩分解矩阵**，在这个过程中冻结pre-trained LLM的参数
+LoRA是在神经网络中直接训练一些dense层来拟合LLM微调过程中的**秩分解矩阵**，在这个过程中冻结pre-trained LLM的参数
 
-LORA在推理的时候和LLM的参数一同推理，与全参数微调相比不会带来太多的推理延迟
+LoRA在推理的时候和LLM的参数一同推理，与全参数微调相比不会带来太多的推理延迟
 
 > Our simple linear design allows us to merge the trainable matrices with the frozen weights when deployed, introducing no inference latency compared to a fully fine-tuned model, by construction.
 
@@ -54,10 +54,10 @@ h = W_0x + \Delta Wx=W_0x + BAx
 $$
 在初始化的过程中，对于$A$采用随机高斯初始化，对于$B$采用0初始化，所以在刚开始$\Delta W = BA$为0矩阵
 
-LORA还通过$\frac{\alpha}{r}$来缩放$\Delta Wx$，其中$\alpha$是$r$的一个常数，当使用Adam优化器时，微调$\alpha$相当于微调学习率，所以LORA直接将$\alpha$设为尝试的第一个$r$，并且不再微调它。这个缩放有助于减少在改变 $r$ 时重新调整超参数的需要
+LoRA还通过$\frac{\alpha}{r}$来缩放$\Delta Wx$，其中$\alpha$是$r$的一个常数，当使用Adam优化器时，微调$\alpha$相当于微调学习率，所以LoRA直接将$\alpha$设为尝试的第一个$r$，并且不再微调它。这个缩放有助于减少在改变 $r$ 时重新调整超参数的需要
 
-- 当把$r$设置为pre-trained参数矩阵的秩时，LORA可以实现和全参数微调基本一致的效果
-- 推理时，通过$W=W_0+BA$进行推理，与构造微调的模型（添加额外训练层）相比，LORA不会引入额外推理延迟
+- 当把$r$设置为pre-trained参数矩阵的秩时，LoRA可以实现和全参数微调基本一致的效果
+- 推理时，通过$W=W_0+BA$进行推理，与构造微调的模型（添加额外训练层）相比，LoRA不会引入额外推理延迟
 
 
 
@@ -71,7 +71,7 @@ LORA还通过$\frac{\alpha}{r}$来缩放$\Delta Wx$，其中$\alpha$是$r$的一
 
 
 
-LORA效果甚至比全参数微调效果更好，而且也优于其他的微调方法
+LoRA效果甚至比全参数微调效果更好，而且也优于其他的微调方法
 
 
 
@@ -79,10 +79,10 @@ LORA效果甚至比全参数微调效果更好，而且也优于其他的微调�
 
 ![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230817170820836.png)
 
-- 单独对$W_q$或者$W_k$使用LORA效果不好
-- 对$W_q$和$W_v$一起使用LORA效果好
+- 单独对$W_q$或者$W_k$使用LoRA效果不好
+- 对$W_q$和$W_v$一起使用LoRA效果好
 - 即使$r=4$，也能捕获足够的信息
-- 对多个权重矩阵使用较小的$r$进行LORA微调，优于对单独的权重矩阵使用较大的$r$进行LORA微调要好
+- 对多个权重矩阵使用较小的$r$进行LoRA微调，优于对单独的权重矩阵使用较大的$r$进行LoRA微调要好
 
 
 
