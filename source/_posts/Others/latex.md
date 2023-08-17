@@ -9,6 +9,15 @@ math: true
 
 
 
+
+
+#### 实数域
+
+\mathbb{R}
+$$
+\mathbb{R}
+$$
+
 #### 分式
 
 \frac {分子} {分母}
