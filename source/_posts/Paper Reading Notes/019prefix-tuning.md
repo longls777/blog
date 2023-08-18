@@ -18,6 +18,12 @@ math: true
 
 
 
+## 参考链接
+
+> https://www.cnblogs.com/gogoSandy/p/17202169.html
+
+
+
 ## 概述
 
 全参数微调需要为每个下游任务微调specific model，本文提出了Prefix-tuning的方法，可以冻结LLM的参数，对于不同的下游任务只训练一段特殊的前缀即可，大大减少了要训练的参数量
@@ -32,6 +38,8 @@ math: true
 - 对于Encoder-Decoder模型——【prefix， X， prefix'， Y】
 
 ![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230818134917380.png)
+
+> **这里的prefix参数不只包括embedding层而是虚拟token位置对应的每一层的activation都进行更新**
 
 
 
@@ -53,7 +61,7 @@ $$
 
 ### Prefix Length
 
-![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230818135857948.png)
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230818135857948 (1).png)
 
 越长的prefix代表着越多的可训练参数，根据实验，随着prefix长度的增加，模型效果先上升再下降
 
