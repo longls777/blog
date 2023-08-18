@@ -3,8 +3,8 @@ title: Prefix-Tuning - Optimizing Continuous Prompts for Generation
 tags: fine tuning
 categories: Paper Reading Notes
 date: 2023-08-18 14:29:00
-index_img: 
-banner_img: 
+index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230818210042939.png
+banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230818210042939.png
 math: true
 ---
 
