@@ -2,7 +2,7 @@
 title: GPT Understands, Too
 tags: fine tuning
 categories: Paper Reading Notes
-date: 2023-08-17 19:19:00
+date: 2023-08-18 12:19:00
 index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230818115703123.png
 banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230818115703123.png
 math: true
