@@ -77,7 +77,7 @@ P-tuning的效果很好，之前的Prompt模型都是主打小样本效果，而
 
 
 
-## prompt-tuning
+## Prompt-tuning
 
 > [The Power of Scale for Parameter-Efficient Prompt Tuning](https://arxiv.org/abs/2104.08691)
 
