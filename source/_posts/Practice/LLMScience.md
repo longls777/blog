@@ -39,3 +39,22 @@ hide: true
 39600
 
 ![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230819164406358.png)
+
+
+
+## STEP1
+
+使用官方的200条数据和收集到的额外数据，基于llama2-7b lora微调，然后推理
+
+
+
+## STEP2
+
+依然是LORA微调，但是修改模型结构，用最后一个token的embedding + 分类器做分类来训练和推理
+
+
+
+## STEP3
+
+改进分类器，可以套DUMA或者CDUMA，还有就是损失函数，因为评估指标是MAP@3
+
