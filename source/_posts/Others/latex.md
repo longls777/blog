@@ -1,13 +1,11 @@
 ---
 title: latex
 date: 2022-07-03 10:09:31
-index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20220703101253562.png
-banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20220703101253562.png
+index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/16.png
+banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/16.png
 categories: Others
 math: true
 ---
-
-
 
 
 
