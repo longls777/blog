@@ -113,3 +113,4 @@ CUDA_VISIBLE_DEVICES=0 python src/train_bash.py \
 10500条数据，epoch改成2
 
 ![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230820163856986.png)
+
