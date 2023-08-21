@@ -1,5 +1,5 @@
 ---
-title: LORA - LOW-RANK ADAPTATION OF LARGE LANGUAGE MODELS
+title: LORA LOW-RANK ADAPTATION OF LARGE LANGUAGE MODELS
 tags: fine tuning
 categories: Paper Reading Notes
 date: 2023-08-17 19:19:00
