@@ -6,7 +6,6 @@ date: 2023-08-19 14:53:00
 index_img: 
 banner_img: 
 math: true
-hide: true
 ---
 
 **标题：**《Training language models to follow instructions with human feedback》
