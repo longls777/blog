@@ -3,7 +3,7 @@ title: Training language models to follow instructions with human feedback
 tags: LLMs
 categories: Paper Reading Notes
 date: 2023-08-19 14:53:00
-index_img: 
+index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230819134840589.png
 banner_img: 
 math: true
 ---
