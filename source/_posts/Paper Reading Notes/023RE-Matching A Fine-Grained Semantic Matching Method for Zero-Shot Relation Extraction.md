@@ -3,7 +3,7 @@ title: RE-Matching: A Fine-Grained Semantic Matching Method for Zero-Shot Relati
 tags: RE
 categories: Paper Reading Notes
 date: 2023-08-23 14:56:00
-index_img: 
+index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230823164348732.png
 banner_img: 
 math: true
 hide: true
@@ -76,3 +76,80 @@ ZeroRE的两种范式：
 
 
 
+### Relation Description Encoder
+
+使用多种方法构建实体描述：
+
+e.g. $y$ = headquartered_in  $d$ = “the headquarters of an organization is located in a place”   
+
+- 使用关键词：$d$中的entity hypernym直接用于实体表示，$d^h$ = organization， $d^t$ = place
+- 使用同义词：$d^h$ = organization, institution, company
+- 基于规则的模板填充：收到prompt的启发，使用类似的描述来生成更好的实体表示
+  - the head/tail entity types including [S], [S], ...
+  - $d^h$ = the head entity types including organization, institution, company
+
+
+
+###  Input Instance Encoder
+
+- 插入四个special token来标记head entity和tail entity 
+  - [Eh], [\Eh], [Et], [\Et]
+
+- 使用MAXPool来获取对应的entity表征
+- context表征$x$由拼接[Eh]和[Et]的隐藏层得来
+
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230823184030911.png)
+
+$\phi$是一个MLP，降维用的
+
+
+
+###  Contextual Relation Feature Distillation
+
+这块冗余文本是自己定义的，需要检测
+
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230823184945909.png)
+
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230823184955065.png)
+
+使用一个分类器对编码后的$x$进行分类，但是通常来说分类器很难判断哪些token是冗余的，对于判断实体关系没有用的，所以这里使用了一个梯度反转层
+
+> Gradient Reverse Layer（GRL）：https://arxiv.org/abs/1409.7495
+>
+> （来自chatGPT）
+>
+> 梯度反转层（Gradient Reverse Layer）是深度学习中的一个技巧，通常用于域自适应（Domain Adaptation）或领域不变性学习（Domain Invariant Learning）等任务。它的主要作用是通过反转（翻转）梯度的方向，来减小源域和目标域之间的领域差异，从而帮助模型更好地泛化到不同的领域。
+>
+> 梯度反转层的工作原理如下：
+>
+> 1. **前向传播**：在前向传播过程中，梯度反转层不会对输入数据进行任何改变，仅仅将输入传递给下一层。
+> 2. **反向传播**：在反向传播过程中，梯度反转层会将梯度乘以一个负的标量权重（通常是-1），从而改变了梯度的方向。这样，在反向传播过程中，梯度将朝着相反的方向传递回来。
+>
+> 梯度反转层通常用于域自适应中的深度神经网络模型，其中源域和目标域之间存在领域差异，但希望模型能够在目标域上表现良好。通过在源域和目标域之间的共享特征提取层之后添加梯度反转层，可以鼓励模型学习到对领域差异不敏感的特征表示。这有助于使模型更好地适应目标域的数据，同时保留对源域数据的有用特征。
+
+
+
+### Relation Feature Distillation Layer
+
+旨在减少冗余文本对于matching的影响
+
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230823185730580.png)
+
+- 首先获取将输入$x$投影到冗余$x^*$（上一步检测出来的）方向
+- 然后从$x$减去$\hat{x}$获取精细化的文本表征$x^p$
+
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230823190024565.png)
+
+
+
+### Fine-Grained Matching and Training
+
+总的匹配分数 = 实体匹配分数 + 文本匹配分数，计算方式如下，：
+
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230823190141897.png)
+
+损失函数：
+
+![=](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230823190309508.png)
+
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230823190419879.png)
