@@ -1,6 +1,6 @@
 ---
 title: The Wisdom of Hindsight Makes Language Models Better Instruction Followers
-tags: 
+tags: RL
 categories: Paper Reading Notes
 date: 2023-08-23 13:14:00
 index_img: 

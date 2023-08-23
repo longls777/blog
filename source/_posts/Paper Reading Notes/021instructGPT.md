@@ -19,6 +19,8 @@ math: true
 ## 参考链接
 
 > https://cloud.tencent.com/developer/article/2216036
+>
+> ChatGPT 为什么不用 Reward-Model 的数据直接 fine-tune，而用 RL？ - 郁博文的回答 - 知乎 https://www.zhihu.com/question/596230048/answer/3102096962
 
 
 
