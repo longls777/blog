@@ -4,9 +4,8 @@ tags: RE
 categories: Paper Reading Notes
 date: 2023-08-23 14:56:00
 index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230823164348732.png
-banner_img: 
+banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/14.jpg
 math: true
-hide: true
 ---
 
 **标题：**《RE-Matching: A Fine-Grained Semantic Matching Method for Zero-Shot Relation Extraction》
