@@ -1,5 +1,5 @@
 ---
-title: RE-Matching: A Fine-Grained Semantic Matching Method for Zero-Shot Relation Extraction
+title: RE-Matching - A Fine-Grained Semantic Matching Method for Zero-Shot Relation Extraction
 tags: RE
 categories: Paper Reading Notes
 date: 2023-08-23 14:56:00
