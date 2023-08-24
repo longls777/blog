@@ -152,3 +152,15 @@ $\phi$是一个MLP，降维用的
 ![=](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230823190309508.png)
 
 ![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230823190419879.png)
+
+## Experments
+
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230824122941594.png)
+
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230824123659523.png)
+
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230824123711639.png)
+
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230824123735657.png)
+
+![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230824123948937.png)
