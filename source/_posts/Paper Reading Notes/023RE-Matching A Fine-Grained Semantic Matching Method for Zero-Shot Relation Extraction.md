@@ -64,7 +64,7 @@ ZeroRE的两种范式：
 ![](http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230823164348732.png)
 
 - 将关系描述和输入实例分成两个模块，分别建模关系匹配模式，这样的好处是可以复用$d$和$x$，推理更高效
-- 分别编码$x$和n个候选的$d$
+- 分别编码$x$ 和n个候选的$d$
 - 对于$d$ ： 为了增强$d$中不足的实体信息，使用Sentence-BERT分别建模$d^h$（head entity），$d^t$（tail entity），和$d$（描述本身）
 - 对于$x$ ： 使用BERT编码$x^h$，$x^t$,  $x$
 - 联合编码 -> 分别编码 ： $O(mn) \to O(m + n)$
