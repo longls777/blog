@@ -1,6 +1,5 @@
 ---
-title: RelationPrompt - Leveraging Prompts to Generate Synthetic Data for
-Zero-Shot Relation Triplet Extraction
+title: RelationPrompt - Leveraging Prompts to Generate Synthetic Data for Zero-Shot Relation Triplet Extraction
 tags: RE
 categories: Paper Reading Notes
 date: 2023-08-30 21:20:00
