@@ -12,7 +12,7 @@ math: true
 
 **论文来源：** EMNLP  2021
 
-**原文链接： **https://aclanthology.org/2021.emnlp-main.92/
+**原文链接： ** https://aclanthology.org/2021.emnlp-main.92/
 
 **源码：** https://github.com/osainz59/Ask2Transformers
 
