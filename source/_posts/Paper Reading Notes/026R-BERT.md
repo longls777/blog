@@ -1,5 +1,5 @@
 ---
-title: Enriching Pre-trained Language Model with Entity Information for
+title: Enriching Pre - trained Language Model with Entity Information for
 Relation Classification
 tags: RE
 categories: Paper Reading Notes
