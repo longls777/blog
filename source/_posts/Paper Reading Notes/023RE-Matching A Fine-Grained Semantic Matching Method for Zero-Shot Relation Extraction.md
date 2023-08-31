@@ -10,9 +10,9 @@ math: true
 
 **标题：**《RE-Matching: A Fine-Grained Semantic Matching Method for Zero-Shot Relation Extraction》
 
-**论文来源：** ACL 2023
+**论文来源：** ACL Long 2023
 
-**原文链接：** https://arxiv.org/pdf/2306.04954.pdf
+**原文链接：** https://aclanthology.org/2023.acl-long.369/
 
 **源码：** https://github.com/zweny/RE-Matching
 

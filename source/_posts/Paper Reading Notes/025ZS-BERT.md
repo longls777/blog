@@ -12,7 +12,7 @@ math: true
 
 **论文来源：** NAACL  2021
 
-**原文链接： **https://aclanthology.org/2021.naacl-main.272
+**原文链接： **  https://aclanthology.org/2021.naacl-main.272
 
 **源码：** https://github.com/dinobby/ZS-BERT
 
