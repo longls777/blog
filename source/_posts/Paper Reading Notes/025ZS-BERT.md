@@ -3,7 +3,7 @@ title: ZS-BERT - Towards Zero-Shot Relation Extraction with Attribute Representa
 tags: RE
 categories: Paper Reading Notes
 date: 2023-08-25 14:43:00
-index_img: 
+index_img: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20230825160632508.png
 banner_img: 
 math: true
 ---
