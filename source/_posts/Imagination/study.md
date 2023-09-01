@@ -36,6 +36,10 @@ hide: true
 > 怎么谈恋爱才能长久谈下去呢？ - Alex Benz的回答 - 知乎 https://www.zhihu.com/question/30616492/answer/1946723037
 >
 > 是什么突然让你放弃一段感情？ - 江北的小推车的回答 - 知乎 https://www.zhihu.com/question/362784399/answer/3159622602
+>
+> 在你眼里回避型依恋的人是什么样子？ - 林安青的回答 - 知乎 https://www.zhihu.com/question/498061649/answer/2246064369
+>
+> 回避型依恋是不是适合一辈子单身？ - 银河系第四天灾的回答 - 知乎 https://www.zhihu.com/question/444174660/answer/2251043456
 
 
 
