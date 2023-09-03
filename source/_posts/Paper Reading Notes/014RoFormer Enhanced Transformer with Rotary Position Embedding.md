@@ -18,7 +18,7 @@ math: true
 
 
 
-## 参考链接（建议按顺序阅读）
+## 参考链接
 
 > [让研究人员绞尽脑汁的Transformer位置编码](https://kexue.fm/archives/8130)
 >
