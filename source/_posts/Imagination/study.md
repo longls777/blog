@@ -40,6 +40,8 @@ hide: true
 > 在你眼里回避型依恋的人是什么样子？ - 林安青的回答 - 知乎 https://www.zhihu.com/question/498061649/answer/2246064369
 >
 > 回避型依恋是不是适合一辈子单身？ - 银河系第四天灾的回答 - 知乎 https://www.zhihu.com/question/444174660/answer/2251043456
+>
+> 在领悟到什么道理后，你的人生从此轻松了起来？ - 知乎 https://www.zhihu.com/question/467881890/answer/2077800481
 
 
 
