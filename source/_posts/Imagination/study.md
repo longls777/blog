@@ -3,11 +3,10 @@ title: study
 date: 2023-08-21 22:54:01
 categories: Imagination
 hide: true
+sticky: 777
 ---
 
 
-
-## 看过的
 
 > 男生们说说分手后的感受呗？ - Mr.chen的回答 - 知乎 https://www.zhihu.com/question/288724594/answer/2328420139
 >
@@ -42,9 +41,7 @@ hide: true
 > 回避型依恋是不是适合一辈子单身？ - 银河系第四天灾的回答 - 知乎 https://www.zhihu.com/question/444174660/answer/2251043456
 >
 > 在领悟到什么道理后，你的人生从此轻松了起来？ - 知乎 https://www.zhihu.com/question/467881890/answer/2077800481
+>
+> 哪一刻让你终于意识到了这就是命? - 知乎用户ty4hVm的回答 - 知乎 https://www.zhihu.com/question/46874031/answer/2419507908
 
 
-
-## 待看
-
-> 
