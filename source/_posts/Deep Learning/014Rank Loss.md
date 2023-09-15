@@ -1,5 +1,5 @@
 ---
-title: margin loss
+title: Rank Loss
 tags: 
 categories: Deep Learning
 date: 2023-9-15 13:11:00
