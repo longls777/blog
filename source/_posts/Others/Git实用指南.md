@@ -8,6 +8,12 @@ banner_img: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-202309221745
 math: true
 ---
 
+## GIT官方文档
+
+我写的有些可能有问题，一切以官方文档为准
+
+> https://git-scm.com/book/zh/v2
+
 ## Git常用命令
 
 克隆仓库到本地，注意如果没有在仓库配置SSH密钥，没有办法鉴权，无法通过`git@xxxxx`链接clone，只能使用`http....`链接
