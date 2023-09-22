@@ -46,7 +46,7 @@ merge分支，在合并后的分支下执行，意为将其他分支merge进本�
 
 ## Git一般开发流程
 
-首先从远程**clone**开发仓库：
+首先从远程clone开发仓库：
 
 `git clone xxxxx`
 
