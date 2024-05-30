@@ -2,7 +2,7 @@
 title: Reinforcement Learning and RLHF
 tags: RL
 categories: Work
-date: 2023-08-30 21:20:00
+date: 2024-05-30 20:47:00
 index_img: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240530201052952.png
 banner_img: 
 math: true
