@@ -3,8 +3,8 @@ title: Reinforcement Learning and RLHF
 tags: RL
 categories: Work
 date: 2024-05-30 20:47:00
-index_img: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240530201052952.png
-banner_img: 
+index_img: 
+banner_img: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240530201052952.png
 math: true
 ---
 
@@ -22,7 +22,7 @@ math: true
 
 
 
-# PPO to DPO
+## PPO to DPO
 
 > [详细推导DPO算法](https://zhuanlan.zhihu.com/p/697757566)
 
@@ -95,6 +95,8 @@ math: true
 带入得到：
 
 ![](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240530200931279.png)
+
+## 在Bradley-Terry model下推导DPO
 
 
 
