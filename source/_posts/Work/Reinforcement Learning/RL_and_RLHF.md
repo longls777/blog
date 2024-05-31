@@ -102,3 +102,39 @@ math: true
 
 ![](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240530205843281.png)
 
+
+
+> Bradley-Terry Model, define $p_i = e^{\beta_i}$
+> $$
+> P(i>j)=\frac{p_i}{p_i+p_j}=\frac{e^{\beta_i}}{e^{\beta_i}+e^{\beta_j}}=\frac{1}{1+e^{\beta_j-\beta_i}}=\sigma(\beta_i-\beta_j)
+> $$
+> https://en.wikipedia.org/wiki/Bradley%E2%80%93Terry_model
+
+根据上一节得到的公式，我们稍作变换就能得到：
+
+![image-20240531102918306](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240531102918306.png)
+
+这里的$r^*(x,y)$指的是ground-truth reward model，$\pi^*(y|x)$是optimal model，那么把这个带入上面的BT model 公式就可以实现消掉reward model：
+
+![](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240531103829599.png)
+
+所以最后得到DPO的公式：
+
+![](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240531104447834.png)
+
+其中$y_w$是preferred response，$y_l$是dispreferred response
+
+
+
+## DPO在优化什么？
+
+> https://blog.csdn.net/v_JULY_v/article/details/134242910
+
+![DPO Loss的梯度](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240531105102570.png)
+
+其中$\hat{r}_{\theta}(x,y)=\beta log\frac{\pi_{\theta}(y|x)}{\pi_{ref}(y|x)}$
+
+对于上面这个梯度公式，只看最后一项的话，DPO Loss目的是增大$y_w$的likelihood，减少$y_l$的likelihood，这符合我们的需求，即让模型倾向于输出preferred response
+
+这里更重要的是，最后这一项加了一个权重$\sigma(\hat{r}_{\theta}(x,y_l)-\hat{r}_{\theta}(x,y_w))$，这里表示当非偏好答案$y_l$的奖励大于偏好答案$y_w$的奖励时，梯度越大
+
