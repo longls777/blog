@@ -112,7 +112,7 @@ math: true
 
 根据上一节得到的公式，我们稍作变换就能得到：
 
-![image-20240531102918306](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240531102918306.png)
+![](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240531102918306.png)
 
 这里的$r^*(x,y)$指的是ground-truth reward model，$\pi^*(y|x)$是optimal model，那么把这个带入上面的BT model 公式就可以实现消掉reward model：
 
@@ -137,4 +137,79 @@ math: true
 对于上面这个梯度公式，只看最后一项的话，DPO Loss目的是增大$y_w$的likelihood，减少$y_l$的likelihood，这符合我们的需求，即让模型倾向于输出preferred response
 
 这里更重要的是，最后这一项加了一个权重$\sigma(\hat{r}_{\theta}(x,y_l)-\hat{r}_{\theta}(x,y_w))$，这里表示当非偏好答案$y_l$的奖励大于偏好答案$y_w$的奖励时，梯度越大
+
+
+
+## DPO code from paper
+
+```python
+import torch.nn.functional as F
+
+def dpo_loss(pi_logps, ref_logps, yw_idxs, yl_idxs, beta):
+  """
+  pi_logps: policy logprobs, shape (B,)
+  ref_logps: reference model logprobs, shape (B,)
+  yw_idxs: preferred completion indices in [0, B-1], shape (T,)
+  yl_idxs: dispreferred completion indices in [0, B-1], shape (T,)
+  beta: temperature controlling strength of KL penalty
+  Each pair of (yw_idxs[i], yl_idxs[i]) represents the
+  indices of a single preference pair.
+  """
+  pi_yw_logps, pi_yl_logps = pi_logps[yw_idxs], pi_logps[yl_idxs]
+  ref_yw_logps, ref_yl_logps = ref_logps[yw_idxs], ref_logps[yl_idxs]
+  pi_logratios = pi_yw_logps - pi_yl_logps
+  ref_logratios = ref_yw_logps - ref_yl_logps
+  losses = -F.logsigmoid(beta * (pi_logratios - ref_logratios))
+  rewards = beta * (pi_logps - ref_logps).detach()
+  return losses, rewards
+```
+
+
+
+## SimPO
+
+> [SimPO: Simple Preference Optimization with a Reference-Free Reward](https://arxiv.org/pdf/2405.14734)
+
+> The effectiveness of SimPO is attributed to a key design: 
+>
+> **using the average log probability of a sequence as the implicit reward**
+
+![SimPO抛弃了reference model，变得更轻量](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240531142809489.png)
+
+SimPO认为DPO的两个缺点：
+
+- $\pi_{ref}$ reference model在训练过程中会消耗额外的memory和计算能力
+- DPO训练过程中的reward和推理时的metric存在discrepancy，generation时，$\pi_{\theta}$的目标是拟合如下的average log likelihood:
+
+![](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240531143521009.png)
+
+对于DPO而言，$r(x,y_w)>r(x,y_l)$和$p_{\theta}(y_w|x)>p_{\theta}(y_l|x)$并不等价，根据实验，其实是一半一半的关系：
+
+![](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240531144800398.png)
+
+SimPO使用下式替换DPO中的reward formulation，从而和generation阶段对齐
+
+![](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240531144903078.png)
+
+除此之外，SimPO还引入了一个target reward margin term $\gamma(\gamma>0)$，来确保reward存在一个下限：
+
+![SimPO BT model](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240531145417352.png)
+
+最终得到SimPO的公式：
+
+![](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240531145632835.png)
+
+![](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240531154718476.png)
+
+Browse得到了一些观点
+
+- SimPO在下游任务上并没有什么优势 （SimPO paper's Table 9）
+- 实际上SimPO就是BT model加了一个margin，以及根据response length做了一个normalization（偏好数据集可能存在“标注人员偏好long response”这样的bias，从而使model根据response length区分reward）
+- 有人在之前讨论过BT model加一个margin就能有比较好的效果 https://arxiv.org/pdf/2404.04932
+- SimPO去掉$\pi_{ref}$这里，paper缺失理论证明
+- maybe **DPO + BT margin + length normalization**可以获得更好的效果，that is：
+
+$$
+DPO_{update} = -log\sigma(\frac{\beta}{|y_w|}log\frac{\pi_{\theta}(y_w|x)}{\pi_{ref}(y_w|x)}-\frac{\beta}{|y_l|}log\frac{\pi_{\theta}(y_l|x)}{\pi_{ref}(y_l|x)}-\gamma)
+$$
 
