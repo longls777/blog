@@ -1,6 +1,6 @@
 ---
 title: Reinforcement Learning and RLHF
-tags: RL RLHF
+tags: RL
 categories: Work
 date: 2024-05-30 20:47:00
 index_img:
