@@ -8,8 +8,6 @@ banner_img:
 math: true
 ---
 
-
-
 > https://lilianweng.github.io/posts/2018-04-08-policy-gradient/
 >
 > [Proximal Policy Optimization Algorithms](https://arxiv.org/pdf/1707.06347)
@@ -19,8 +17,6 @@ math: true
 > [Direct Language Model Alignment from Online AI Feedback](https://arxiv.org/pdf/2402.04792)
 >
 > https://hrl.boyuai.com/chapter/2/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95
-
-
 
 ## PPO to DPO
 
@@ -213,3 +209,18 @@ $$
 DPO_{update} = -log\sigma(\frac{\beta}{|y_w|}log\frac{\pi_{\theta}(y_w|x)}{\pi_{ref}(y_w|x)}-\frac{\beta}{|y_l|}log\frac{\pi_{\theta}(y_l|x)}{\pi_{ref}(y_l|x)}-\gamma)
 $$
 
+## online-DPO
+
+> [Direct Language Model Alignment from Online AI Feedback](https://arxiv.org/pdf/2402.04792)
+
+![](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240601135421788.png)
+
+DPO paper中采用的偏好数据集是从一开始就从SFT model采样好的，也就是offline-DPO，然而模型在训练过程中是会不断变化的，也就是$\pi_{\theta}$会不断更新，所以从更新后的$\pi_{\theta}$采样偏好对(pair)无疑更加make sence
+
+![Online-DPO process](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240601151827984.png)
+
+![](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240601151948288.png)
+
+offline DPO训练超过3000 steps后就会迅速collapse，相反online DPO可以稳定优化
+
+![](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20240601152245038.png)
