@@ -3,14 +3,44 @@ title: A unified perspective of RLHF
 tags: LLM RLHF
 categories: Wrok
 date: 2024-10-29 15:49:00
-index_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20220927142410395.png
-banner_img: http://longls777.oss-cn-beijing.aliyuncs.com/img/image-20220927142410395.png
+index_img: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20241030133028665.png
+banner_img: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20241030133028665.png
 math: true
 ---
 
-# RLHF
+# Currently popular RLHF Method
+
+![rlhf pipline](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20241030133028665.png)
 
 ## PPO
+
+## DPO
+
+## ORPO
+
+## KTO
+
+## IPO
+
+## SimPO
+
+
+
+# Relate Work
+
+## UNA: Unifying Alignments of RLHF/PPO, DPO and KTO by a Generalized Implicit Reward Function
+
+**paper**: https://arxiv.org/pdf/2408.15339
+
+**source**: Salesforce
+
+
+
+
+
+
+
+
 
 
 
