@@ -948,14 +948,17 @@ about:
   banner_img: https://longls777.oss-cn-beijing.aliyuncs.com/img/pexels-sergey-pesterev-69811391-14578422.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
-  avatar: /img/avatar.png
-  name: "Aaron"
-  intro: "Traveller"
+  avatar: https://longls777.oss-cn-beijing.aliyuncs.com/img/me.JPG
+  name: "Shilong Li"
+  intro: "I graduated with an Bachelor's degree in Information Engineering from BUPT and am currently pursuing a Master's degree in Artificial Intelligence, focusing on the alignment of large language models (LLMs). Previously, I have interned at ByteDance, Didi, and Alibaba Group."
   # 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找，`class` 代表图标的 css class，添加 `qrcode` 后，图标不再是链接而是悬浮二维码
   # More icons can be found from https://hexo.fluid-dev.com/docs/en/icon/  `class` is the css class of the icon. If adding `qrcode`, The icon is no longer a link, but a hovering QR code
   icons:
+    - { class: "iconfont icon-mail", link: "lishilong.aaron@gmail.com", tip: "lishilong.aaron@gmail.com" }
+    - { class: "iconfont icon-google-fill", link: "https://scholar.google.com/citations?user=9VvLSQ4AAAAJ", tip: "Google Scholar" }
+    - { class: "iconfont icon-linkedin-fill", link: "https://www.linkedin.com/in/shilong-li-930304310/", tip: "Linkedin" }
     - { class: "iconfont icon-github-fill", link: "https://github.com/longls777", tip: "GitHub" }
-    - { class: "iconfont icon-wechat-fill", qrcode: "https://longls777.oss-cn-beijing.aliyuncs.com/img/wechat.png" }
+
 
 
 #---------------------------
