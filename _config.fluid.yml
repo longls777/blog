@@ -438,8 +438,8 @@ footer:
     # Data source. If use leancloud, you need to set the parameter in `web_analytics: leancloud`
     # Options: busuanzi | leancloud
     source: "busuanzi"
-    pv_format: "总访问量 {} 次"  # 显示的文本，{}是数字的占位符（必须包含)，下同
-    uv_format: "总访客数 {} 人"
+    pv_format: "Page views: {}"  # 显示的文本，{}是数字的占位符（必须包含)，下同
+    uv_format: "Unique visitors: {}"
 
   # 国内大陆服务器的备案信息
   # For Chinese mainland website policy, other areas keep disable
@@ -730,7 +730,19 @@ post:
     # 指定的插件，需要同时设置对应插件的必要参数
     # The specified plugin needs to set the necessary parameters at the same time
     # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus
-    type: disqus
+    # type: disqus
+    type: gitalk
+    gitalk:
+      clientID: Ov23lixkRfOI43RnCYtJ
+      clientSecret: e5e2ff04b76e43af1fb9d9d31babac612ae826de
+      repo: blog_comments
+      owner: longls777
+      admin: ['longls777']
+      id: uid
+      language: en
+      distractionFreeMode: true
+      recentComment: true # 是否展示最近评论
+      proxy: '' # 代理设置
 
 
 #---------------------------
