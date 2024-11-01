@@ -10,9 +10,13 @@ math: true
 
 # Currently popular RLHF Method
 
-![rlhf pipline](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20241030133028665.png)
+![rlhf pipline](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20241030133028665-20241101110743521.png)
+
+To this day，the post-training diagram for LLMs is still CPT, SFT and RLHF. There are no signs that this diagram will change currently. Focusing on RLHF, I will attempt to provide a comprehensive review, summary and future outlook in the following, in order to clarify its development path and hopefully gain some interesting insights.
 
 ## PPO
+
+
 
 ## DPO
 
