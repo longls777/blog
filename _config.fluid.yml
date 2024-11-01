@@ -438,8 +438,8 @@ footer:
     # Data source. If use leancloud, you need to set the parameter in `web_analytics: leancloud`
     # Options: busuanzi | leancloud
     source: "busuanzi"
-    pv_format: "Page views: {}"  # 显示的文本，{}是数字的占位符（必须包含)，下同
-    uv_format: "Unique visitors: {}"
+    pv_format: "Page Views: {}"  # 显示的文本，{}是数字的占位符（必须包含)，下同
+    uv_format: "Unique Visitors: {}"
 
   # 国内大陆服务器的备案信息
   # For Chinese mainland website policy, other areas keep disable
@@ -733,6 +733,8 @@ post:
     # type: disqus
     type: gitalk
     gitalk:
+      enable: true # 开关打开
+      autoExpand: true # 评论是否自动展开
       clientID: Ov23lixkRfOI43RnCYtJ
       clientSecret: e5e2ff04b76e43af1fb9d9d31babac612ae826de
       repo: blog_comments

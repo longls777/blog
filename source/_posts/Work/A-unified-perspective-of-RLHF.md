@@ -6,6 +6,7 @@ date: 2024-10-29 15:49:00
 index_img: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20241030133028665.png
 banner_img: https://longls777.oss-cn-beijing.aliyuncs.com/img/pexels-sergey-pesterev-69811391-14578422.jpg
 math: true
+comment: true
 ---
 
 # Currently popular RLHF Method
