@@ -797,7 +797,7 @@ gitalk:
     language: en
     distractionFreeMode: true
     recentComment: true # 是否展示最近评论
-    proxy: '' # 代理设置
+    proxy: https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token # 代理设置
     perPage: 15
 # Valine
 # 基于 LeanCloud
