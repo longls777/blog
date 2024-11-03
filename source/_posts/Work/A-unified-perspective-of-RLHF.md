@@ -15,7 +15,47 @@ comment: true
 
 To this day，the post-training diagram for LLMs is still CPT, SFT and RLHF. There are no signs that this diagram will change currently. Focusing on RLHF, I will attempt to provide a comprehensive review, summary and future outlook in the following, in order to clarify its development path and hopefully gain some interesting insights.
 
-## PPO
+## Policy Gradient Algorithm
+
+As a reinforcement learning algorithm that directly optimizes the policy itself, policy gradient methods compute a estimator of the gradient and optimize it using the gradient ascent algorithm. Specifically, this estimator is generally:
+
+$$
+\hat{g} = \hat{\mathbb{E}}_t \left[ \nabla_\theta \log \pi_\theta(a_t \mid s_t) \hat{A}_t \right]
+$$
+
+
+where $\pi_\theta$ is the stochastic policy and $\hat{A}_t$ is the estimator of the advantage function at timestep $t$. 
+
+So the estimator $\hat{g}$ is actually obtained by differentiating the objective:
+$$
+L^{PG}(\theta) = \hat{\mathbb{E}}_t \left[ \log \pi_\theta (a_t \mid s_t)\hat{A}_t \right].
+$$
+However, directly using $L^{PG}$ as a loss for optimization may lead to excessively large policy updates, potentially pushing the policy away from well-performing regions, and it often performs poorly in practice. Therefore, in pratice, various methods such as PPO are typically used, as they incorporate mechanisms to control update sizes and ensure more stable and efficient learning.
+
+## TRPO(Trust Region policy optimization) 
+
+TRPO maximizes an objective function while subjecting it to a constraint on the size of the policy update. Specifically:
+
+$$
+\text{maximize}_{\theta} \, \hat{\mathbb{E}}_t \left[ \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid s_t)} \hat{A}_t \right]
+$$
+subject to $\hat{\mathbb{E}}_t[\text{KL}[\pi_{\theta_{\text{old}}}(\cdot \mid s_t), \pi_\theta(\cdot \mid s_t)]] \le \delta$, where, $\theta_{\text{old}}$ is the policy parameters before the update. 
+
+
+
+By incorporating a penalty term in the objective function to control the size of policy updates, the problem becomes an unconstrained optimization problem:
+$$
+\text{maximize}_{\theta} \hat{\mathbb{E}}_t \left[ \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid s_t)} \hat{A}_t - \beta \text{KL}[\pi_{\theta_{\text{old}}}(\cdot \mid s_t), \pi_\theta(\cdot \mid s_t)] \right]
+$$
+where $\beta$ is the coefficient. However, experiments show that using a fixed $\beta$ and optimizing the upper objective with SGD is insufficient, which leads to the development of PPO.
+
+## PPO(Proximal Policy Optimization)
+
+
+
+
+
+
 
 
 
