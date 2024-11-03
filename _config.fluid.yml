@@ -732,21 +732,6 @@ post:
     # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus
     # type: disqus
     type: gitalk
-  gitalk:
-    enable: true # 开关打开
-    autoExpand: true # 评论是否自动展开
-    clientID: Ov23lixkRfOI43RnCYtJ
-    clientSecret: e5e2ff04b76e43af1fb9d9d31babac612ae826de
-    repo: blog_comments
-    owner: longls777
-    admin: ['longls777']
-    id: uid
-    language: en
-    distractionFreeMode: true
-    recentComment: true # 是否展示最近评论
-    proxy: '' # 代理设置
-    perPage: 15
-
 
 #---------------------------
 # 评论插件
@@ -783,24 +768,37 @@ disqus:
 # 基于 GitHub Issues
 # Based on GitHub Issues
 # See: https://github.com/gitalk/gitalk#options
+# gitalk:
+#   clientID:
+#   clientSecret:
+#   repo:
+#   owner:
+#   admin: ['name']
+#   language: en
+#   labels: ['Gitalk']
+#   perPage: 10
+#   pagerDirection: last
+#   distractionFreeMode: false
+#   createIssueManually: true
+#   # 默认 proxy 可能会失效，解决方法请见下方链接
+#   # The default proxy may be invalid, refer to the links for solutions
+#   # https://github.com/gitalk/gitalk/issues/429
+#   # https://github.com/Zibri/cloudflare-cors-anywhere
+#   proxy: https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token
 gitalk:
-  clientID:
-  clientSecret:
-  repo:
-  owner:
-  admin: ['name']
-  language: en
-  labels: ['Gitalk']
-  perPage: 10
-  pagerDirection: last
-  distractionFreeMode: false
-  createIssueManually: true
-  # 默认 proxy 可能会失效，解决方法请见下方链接
-  # The default proxy may be invalid, refer to the links for solutions
-  # https://github.com/gitalk/gitalk/issues/429
-  # https://github.com/Zibri/cloudflare-cors-anywhere
-  proxy: https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token
-
+    enable: true # 开关打开
+    autoExpand: true # 评论是否自动展开
+    clientID: Ov23lixkRfOI43RnCYtJ
+    clientSecret: e5e2ff04b76e43af1fb9d9d31babac612ae826de
+    repo: blog_comments
+    owner: longls777
+    admin: ['longls777']
+    id: uid
+    language: en
+    distractionFreeMode: true
+    recentComment: true # 是否展示最近评论
+    proxy: '' # 代理设置
+    perPage: 15
 # Valine
 # 基于 LeanCloud
 # Based on LeanCloud
