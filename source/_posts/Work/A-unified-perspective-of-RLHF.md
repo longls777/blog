@@ -30,7 +30,7 @@ So the estimator $\hat{g}$ is actually obtained by differentiating the objective
 $$
 L^{PG}(\theta) = \hat{\mathbb{E}}_t \left[ \log \pi_\theta (a_t \mid s_t)\hat{A}_t \right].
 $$
-However, directly using $L^{PG}$ as a loss for optimization may lead to excessively large policy updates, potentially pushing the policy away from well-performing regions, and it often performs poorly in practice. Therefore, in pratice, various methods such as PPO are typically used, as they incorporate mechanisms to control update sizes and ensure more stable and efficient learning.
+However, directly using $L^{PG}$ as a loss for optimization may lead to excessively large policy updates, potentially pushing the policy away from well-performing regions, and it often performs poorly in practice. Therefore, various methods such as PPO are typically used, as they incorporate mechanisms to control update sizes and ensure more stable and efficient learning.
 
 ## TRPO(Trust Region policy optimization) 
 
@@ -51,9 +51,29 @@ where $\beta$ is the coefficient. However, experiments show that using a fixed $
 
 ## PPO(Proximal Policy Optimization)
 
+### PPO - CLIP
 
+We define that $r_t(\theta) = \frac{\pi_{\theta}(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)}$, then the main objective proposed by PPO  is:
+$$
+L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t \left[ \min \left( r_t(\theta) \hat{A}_t, \text{clip}(r_t(\theta), 1 - \epsilon, 1 + \epsilon) \hat{A}_t \right) \right]
+$$
+where $\epsilon$ is the hyperparameter. This formulation ensures that $r_t(\theta)$ remains within a certain range, preventing  $\pi_{\theta}(a_t|s_t)$ from deviating too much from $\pi_{\theta_{old}}(a_t|s_t)$.
 
+![$L^{CLIP}$](https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20241103180514694.png)
 
+The choice between $1 + \epsilon$ and $1 - \epsilon$ depends on the sign of the advantage function $\hat{A}_t$. 
+
+**When $\hat{A}_t > 0$ (i.e., the current action is better than the baseline):** 
+
+Increasing $r_t(\theta)$ (i.e., the new policy is more inclined to choose this action) will enhance the objective function because it amplifies the positive advantage. However, to prevent excessively large policy updates that could destabilize training, if $r_t(\theta) > 1 + \epsilon$, the clipped term $(1 + \epsilon) \hat{A}_t$ will be smaller than the unclipped term $r_t(\theta) \hat{A}_t$. Since the objective function takes the minimum of the two, in this case, the clipped term $(1 + \epsilon) \hat{A}_t$ will be selected, thereby ignoring further increases in $r_t(\theta)$ that would otherwise beneficially change the objective.
+
+**When $\hat{A}_t < 0$ (i.e., the current action is worse than the baseline):**
+
+Decreasing $r_t(\theta)$ (i.e., the new policy is less inclined to choose this action) will enhance the objective function because it reduces the impact of the negative advantage. If $r_t(\theta) < 1 - \epsilon$, the clipped term $(1 - \epsilon) \hat{A}_t$ will be smaller than the unclipped term $r_t(\theta) \hat{A}_t$ (since $\hat{A}_t$ is negative).  In this case, the clipped term $(1 - \epsilon) \hat{A}_t$ will be selected, thereby preserving $r_t(\theta)$ from decreasing too much.
+
+In fact, the role of $L^{\text{CLIP}}$  is to constrain the updates of $r_t(\theta)$ within a certain range.
+
+### PPO - Penalty
 
 
 
