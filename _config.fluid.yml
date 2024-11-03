@@ -732,19 +732,20 @@ post:
     # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus
     # type: disqus
     type: gitalk
-    gitalk:
-      enable: true # 开关打开
-      autoExpand: true # 评论是否自动展开
-      clientID: Ov23lixkRfOI43RnCYtJ
-      clientSecret: e5e2ff04b76e43af1fb9d9d31babac612ae826de
-      repo: blog_comments
-      owner: longls777
-      admin: ['longls777']
-      id: uid
-      language: en
-      distractionFreeMode: true
-      recentComment: true # 是否展示最近评论
-      proxy: '' # 代理设置
+  gitalk:
+    enable: true # 开关打开
+    autoExpand: true # 评论是否自动展开
+    clientID: Ov23lixkRfOI43RnCYtJ
+    clientSecret: e5e2ff04b76e43af1fb9d9d31babac612ae826de
+    repo: blog_comments
+    owner: longls777
+    admin: ['longls777']
+    id: uid
+    language: en
+    distractionFreeMode: true
+    recentComment: true # 是否展示最近评论
+    proxy: '' # 代理设置
+    perPage: 15
 
 
 #---------------------------
