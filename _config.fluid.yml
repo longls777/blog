@@ -795,7 +795,7 @@ gitalk:
     admin: ['longls777']
     id: uid
     language: en
-    distractionFreeMode: true
+    distractionFreeMode: false
     recentComment: true # 是否展示最近评论
     proxy: https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token # 代理设置
     perPage: 15
