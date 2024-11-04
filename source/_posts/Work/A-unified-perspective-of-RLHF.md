@@ -15,15 +15,29 @@ comment: true
 
 To this day，the post-training diagram for LLMs is still CPT, SFT and RLHF. There are no signs that this diagram will change currently. Focusing on RLHF, I will attempt to provide a comprehensive review, summary and future outlook in the following, in order to clarify its development path and hopefully gain some interesting insights.
 
-## Policy Gradient Algorithm
+## Preliminaries
+
+### Potential-Based Reward Shaping (PBRS)
+
+> **Definition**
+>
+> A shaping reward function $F : S \times A \times S \to \mathbb{R}$ is potential-based if there exists $\Phi : S \to \mathbb{R}$ such that:
+> $$
+> F(s, a, s') = \gamma \Phi(s') - \Phi(s)
+> $$
+> for all $s \neq s_0, a, s'$.
+
+PBRS cleverly introduces the concept of potential, guiding the agent to search more quickly in the state space without altering the optimal policy of the original problem.
+
+>[Policy Invariance Under Reward Transformations: Theory and Application to Reward Shaping](https://people.eecs.berkeley.edu/~pabbeel/cs287-fa09/readings/NgHaradaRussell-shaping-ICML1999.pdf)
+
+### Policy Gradient Algorithm
 
 As a reinforcement learning algorithm that directly optimizes the policy itself, policy gradient methods compute a estimator of the gradient and optimize it using the gradient ascent algorithm. Specifically, this estimator is generally:
 
 $$
 \hat{g} = \hat{\mathbb{E}}_t \left[ \nabla_\theta \log \pi_\theta(a_t \mid s_t) \hat{A}_t \right]
 $$
-
-
 where $\pi_\theta$ is the stochastic policy and $\hat{A}_t$ is the estimator of the advantage function at timestep $t$. 
 
 So the estimator $\hat{g}$ is actually obtained by differentiating the objective:
@@ -32,7 +46,16 @@ L^{PG}(\theta) = \hat{\mathbb{E}}_t \left[ \log \pi_\theta (a_t \mid s_t)\hat{A}
 $$
 However, directly using $L^{PG}$ as a loss for optimization may lead to excessively large policy updates, potentially pushing the policy away from well-performing regions, and it often performs poorly in practice. Therefore, various methods such as PPO are typically used, as they incorporate mechanisms to control update sizes and ensure more stable and efficient learning.
 
-## TRPO(Trust Region policy optimization) 
+### Generalized Advantage Estimator(GAE)
+
+GAE is a widely applicable advantage estimation method that can effectively reduce the variance of gradient estimation in policy gradient methods. The formula of GAE is:
+$$
+\hat{A}_t^{GAE(\gamma, \lambda)} = \sum_{l=0}^{\infty} (\gamma \lambda)^l \delta_{t+l}^V = \sum_{l=0}^{\infty} (\gamma \lambda)^l (r_{t+l} + \gamma V(s_{t+l+1}) - V(s_{t+l}))
+$$
+
+> [High-Dimensional Continuous Control Using Generalized Advantage Estimation](https://arxiv.org/abs/1506.02438)
+
+### TRPO(Trust Region policy optimization) 
 
 TRPO maximizes an objective function while subjecting it to a constraint on the size of the policy update. Specifically:
 
@@ -49,9 +72,11 @@ $$
 $$
 where $\beta$ is the coefficient. However, experiments show that using a fixed $\beta$ and optimizing the upper objective with SGD is insufficient, which leads to the development of PPO.
 
-## PPO(Proximal Policy Optimization)
+## Methods
 
-### PPO - CLIP
+### PPO(Proximal Policy Optimization)
+
+#### PPO - CLIP
 
 We define that $r_t(\theta) = \frac{\pi_{\theta}(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)}$, then the main objective proposed by PPO  is:
 $$
@@ -73,54 +98,50 @@ Decreasing $r_t(\theta)$ (i.e., the new policy is less inclined to choose this a
 
 In fact, the role of $L^{\text{CLIP}}$  is to constrain the updates of $r_t(\theta)$ within a certain range.
 
-### PPO - Penalty
+#### PPO - Penalty
 
+PPO-penalty employs several epochs of minibatch SGD to optimize the KL-penalized objective given by:
 
+$$
+L^{KL PEN}(\theta) = \hat{\mathbb{E}}_t \left[ \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid s_t)} \hat{A}_t - \beta \text{KL}[\pi_{\theta_{\text{old}}}(\cdot \mid s_t), \pi_\theta(\cdot \mid s_t)] \right]
+$$
+then computes $d = \hat{\mathbb{E}}_t[\text{KL}[\pi_{\theta_{\text{old}}}(\cdot \mid s_t),\pi_\theta(\cdot \mid s_t)]]$
 
+- If $d < d_{\text{targ}}/1.5$, $\beta \leftarrow \beta/2$
+- If $d > d_{\text{targ}} \times 1.5$, $\beta \leftarrow \beta \times 2$
 
+where $d_{targ}$ is a pre-set hyperparameter used to limit the difference between the current policy and the policy from the previous iteration. The updated $\beta$ is used for the next policy update.
 
-## DPO
+Apparently, PPO-penalty imposes less strict constraints on the magnitude of policy updates compared to PPO-clip, and its performance in experiments is also inferior to the latter according to the PPO paper.
 
-## ORPO
+#### PPO's Advantage Estimator
 
-## KTO
+PPO adopts a truncated generalized advantage estimator(GAE), when $\lambda = 1$:
+$$
+\hat{A}_t = \delta_t + (\gamma \lambda) \delta_{t+1} + \cdots + (\gamma \lambda)^{T-t+1} \delta_{T-1},
+$$
+where $\delta_t = r_t + \gamma V(s_{t+1}) - V(s_t)$. In RLHF, $r_t$ is provided by the reward model, generally using the following formula:
+$$
+r(s_t, \mathbf{a}_t) = 
+\begin{cases} 
+\beta \log \pi_{\text{ref}}(\mathbf{a}_t|s_t), & \text{if } s_{t+1} \text{ is not terminal} \\
+r(\mathbf{x}, \mathbf{y}) + \beta \log \pi_{\text{ref}}(\mathbf{a}_t|s_t), & \text{if } s_{t+1} = \mathbf{y} \text{ is terminal}
+\end{cases}
+$$
+$V(s_t)$ is given by the critic model, which fits the expected return by calculating an MSE loss with the actual return $R_t=r_t + r_{t+1} + ... + r_T$.
 
-## IPO
+### DPO
 
-## SimPO
+### ORPO
 
+### KTO
 
+### IPO
 
-# Relate Work
+### SimPO
 
-## UNA: Unifying Alignments of RLHF/PPO, DPO and KTO by a Generalized Implicit Reward Function
-
-**paper**: https://arxiv.org/pdf/2408.15339
-
-**source**: Salesforce
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+> [High-Dimensional Continuous Control Using Generalized Advantage Estimation](https://arxiv.org/pdf/1506.02438)
+>
 > [Proximal Policy Optimization Algorithms](https://arxiv.org/pdf/1707.06347)
 >
 > [Direct Preference Optimization: Your Language Model is Secretly a Reward Model](https://arxiv.org/pdf/2305.18290)
