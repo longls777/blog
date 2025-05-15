@@ -1,0 +1,24 @@
+name: "Shilong Li (李世龙)"
+avatar: https://longls777.oss-cn-beijing.aliyuncs.com/img/me.JPG           # 放到 source/img/ 下
+email: lishilong.aaron@gmail.com
+scholar: https://scholar.google.com/citations?user=9VvLSQ4AAAAJ
+cv_pdf:  /files/ShilongLi_CV.pdf
+
+intro: |
+  I graduated with an Bachelor's degree in Information Engineering from BUPT and am currently pursuing a Master's degree in Artificial Intelligence, focusing on the alignment of large language models (LLMs). Previously, I have interned at ByteDance, Didi, and Alibaba Group.
+
+
+icons:
+  - class: fas fa-envelope
+    url:  mailto:lishilong.aaron@gmail.com
+    title: Mail
+  - class: ai ai-google-scholar
+    url:  https://scholar.google.com/citations?user=9VvLSQ4AAAAJ
+    title: Scholar
+  - class: fab fa-github
+    url:  https://github.com/longls777
+    title: GitHub
+  - class: ai ai-cv
+    url:  /files/ShilongLi_CV.pdf
+    title: Download CV
+

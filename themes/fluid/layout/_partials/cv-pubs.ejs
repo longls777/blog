@@ -1,0 +1,27 @@
+<section id="pubs" class="card p-4 mt-4">
+  <h2 class="h4 font-weight-bold">Selected Publications</h2>
+
+  <% pubs.forEach(p => { %>
+    <div class="pub d-flex mt-3 pb-3 border-bottom">
+      <img src="<%= p.thumb %>" alt="<%= p.title %>" class="thumb rounded mr-3">
+      <div class="flex-fill">
+        <h3 class="h5 mb-1"><%- p.title %></h3>
+        <p class="authors mb-1"><%- p.authors %></p>
+        <p class="venue small text-muted mb-1"><%= p.venue %>, <%= p.year %></p>
+
+        <p class="links mb-0">
+          <% if (p.pdf)  { %>
+            <a href="<%= p.pdf %>" target="_blank" title="PDF">
+              <i class="fas fa-file-pdf mr-1"></i>PDF
+            </a>
+          <% } %>
+          <% if (p.code) { %>
+            <a href="<%= p.code %>" target="_blank" title="Code">
+              <i class="fas fa-code-branch mr-1"></i>Code
+            </a>
+          <% } %>
+        </p>
+      </div>
+    </div>
+  <% }) %>
+</section>

@@ -1,0 +1,12 @@
+<% const news = site.data.news; %>
+<section id="news" class="card p-4 mt-4">
+  <h2 class="h4 font-weight-bold">News</h2>
+  <ul class="list-unstyled mb-0 news-list">
+    <% news.forEach(n => { %>
+      <li class="d-flex mt-2">
+        <span class="date text-primary mr-2"><%= n.date %></span>
+        <span class="txt flex-fill"><%- n.text %></span>
+      </li>
+    <% }) %>
+  </ul>
+</section>

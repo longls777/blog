@@ -1,0 +1,16 @@
+<% const p = site.data.profile; %>
+<section id="cv-head" class="d-flex flex-md-row align-items-center my-4">
+  <img class="avatar rounded-circle mr-md-4 mb-3 mb-md-0"
+       src="<%= p.avatar %>" alt="<%= p.name %>">
+  <div class="flex-fill">
+    <h1 class="h3 font-weight-bold mb-2"><%= p.name %></h1>
+    <p class="intro mb-2"><%- p.intro %></p>
+
+    <div class="icon-links">
+      <% p.icons.forEach(i => { %>
+        <a class="<%= i.class %>" href="<%= i.url %>" title="<%= i.title %>"
+          target="_blank" rel="noopener"></a>       
+      <% }) %>
+    </div>
+  </div>
+</section>

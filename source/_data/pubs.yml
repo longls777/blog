@@ -1,0 +1,21 @@
+- title: "2D-DPO: Scaling Direct Preference Optimization with 2-Dimensional Supervision"
+  authors: "<b>Shilong Li*</b>, Yancheng He, Hui Huang, Xingyuan Bu, Jiaheng Liu, Hangyu Guo, Weixun Wang, Jihao Gu, ..."
+  venue: "Findings of North American Chapter of the Association for Computational Linguistics (NAACL Findings)"
+  year: 2025
+  thumb: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20250515201618694.png
+  pdf:   https://arxiv.org/pdf/2410.19720
+
+- title: "GraphReader: Building Graph-based Agent to Enhance Long-Context Abilities of Large Language Models"
+  authors: "<b>Shilong Li*</b>, Yancheng He*, Hangyu Guo*, Xingyuan Bu*, Ge Bai, Jie Liu, Jiaheng Liu, ..."
+  venue: "Findings of Conference on Empirical Methods in Natural Language Processing (EMNLP Findings)"
+  year: 2024
+  thumb: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20250515201206410.png
+  pdf:   https://arxiv.org/pdf/2406.14550
+
+- title: "Fusion Makes Perfection: An Efficient Multi-Grained Matching Approach for Zero-Shot Relation Extraction"
+  authors: "<b>Shilong Li*</b>, Ge Bai*, Zhang Zhang*, Ying Liu, Chenji Lu, Daichi Guo, Ruifang Liu, Yong Sun"
+  venue: "North American Chapter of the Association for Computational Linguistics (NAACL)"
+  year: 2024
+  thumb: https://longls777.oss-cn-beijing.aliyuncs.com/img/EMMA.png
+  pdf:   https://arxiv.org/pdf/2406.11429
+  code:  https://github.com/longls777/EMMA

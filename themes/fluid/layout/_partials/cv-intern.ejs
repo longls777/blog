@@ -1,0 +1,22 @@
+<% const jobs = site.data.internships; if (!jobs) return; %>
+<section id="internships" class="card p-4 mt-4">
+  <h2 class="h4 font-weight-bold mb-3">Internships</h2>
+
+  <% jobs.forEach(j => { %>
+    <div class="intern d-flex pb-3 mb-3 border-bottom">
+      <% if (j.logo) { %>
+        <img src="<%= j.logo %>" alt="<%= j.company %>" class="logo mr-3">
+      <% } %>
+
+      <div class="flex-fill">
+        <h3 class="h6 mb-1 font-weight-bold"><%= j.title %> — <%= j.company %></h3>
+        <p class="small text-muted mb-1"><%= j.period %> · <%= j.location %></p>
+        <% if (j.bullets) { %>
+          <ul class="small pl-3 mb-0">
+            <% j.bullets.forEach(b => { %><li><%- b %></li><% }) %>
+          </ul>
+        <% } %>
+      </div>
+    </div>
+  <% }) %>
+</section>
