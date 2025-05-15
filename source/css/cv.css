@@ -41,13 +41,17 @@
 /* ---------- Publications ---------- */
 .pub{display:flex;gap:1rem;margin-top:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border-color,#e5e5e5);}
 .pub:last-child{border-bottom:0;}
+
 .pub .thumb{
-  width:clamp(90px,22vw,130px);   /* 缩略图也自适应 */
-  aspect-ratio:4/3;
-  object-fit:cover;
+  width:140px;           /* 保持统一列宽 */
+  height:100px;          /* 给个视口高，超出的空白会补底色 */
+  object-fit:contain;    /* ★ 不再裁切 */
+  background:#f7f9fa;    /* ★ 留白处填浅灰，防止透明锯齿 */
+  border:1px solid #e5e5e5;
   border-radius:4px;
   flex-shrink:0;
 }
+
 .pub .authors{font-size:.95rem;margin-bottom:.2rem;}
 .pub .links a{margin-right:.6rem;font-size:.85rem;}
 

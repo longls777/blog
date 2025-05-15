@@ -1,3 +1,18 @@
+- title: "Can Large Language Models Detect Errors in Long Chain-of-Thought Reasoning?"
+  authors: "Yancheng He*, <b>Shilong Li*</b>, Jiaheng Liu*, Weixun Wang*, Xingyuan Bu, Ge Zhang, ..."
+  venue: "arxiv"
+  year: 2025
+  thumb: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20250515204611333.png
+  pdf:   https://arxiv.org/pdf/2502.19361
+
+- title: "Chinese SimpleQA: A Chinese Factuality Evaluation for Large Language Models"
+  authors: "Yancheng He*, <b>Shilong Li*</b>, Jiaheng Liu*, Yingshui Tan, ..."
+  venue: "arxiv"
+  year: 2025
+  thumb: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20250515204320708.png
+  pdf:   https://arxiv.org/pdf/2411.07140
+  code:  https://github.com/OpenStellarTeam/ChineseSimpleQA
+
 - title: "2D-DPO: Scaling Direct Preference Optimization with 2-Dimensional Supervision"
   authors: "<b>Shilong Li*</b>, Yancheng He, Hui Huang, Xingyuan Bu, Jiaheng Liu, Hangyu Guo, Weixun Wang, Jihao Gu, ..."
   venue: "Findings of North American Chapter of the Association for Computational Linguistics (NAACL Findings)"

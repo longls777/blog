@@ -1,6 +1,19 @@
+- date: "2025-02"
+  text: "We released the paper <strong>Can Large Language Models Detect Errors in Long Chain-of-Thought Reasoning?</strong>! 🎉"
+  url:  https://arxiv.org/abs/2502.19361            # ★ 链接单独写
+
+- date: "2024-11"
+  text: "We released <strong>Chinese-SimpleQA</strong>! 🎉"
+  url:  https://openstellarteam.github.io/ChineseSimpleQA/
+
 - date: "2024-12"
-  text: "Our paper 2D-DPO has been accepted at the Findings of NAACL 2025!🎉 "
+  text: "Our paper <strong>2D-DPO</strong> has been accepted at Findings of NAACL 2025! 🎉"
+  url:  https://arxiv.org/abs/2410.19720
+
 - date: "2024-09"
-  text: "Our paper Graphreader has been accepted at the Findings of EMNLP 2024!🚀 "
+  text: "Our paper <strong>GraphReader</strong> has been accepted at Findings of EMNLP 2024! 🚀"
+  url:  https://arxiv.org/abs/2406.14550
+
 - date: "2024-03"
-  text: "EMMA accepted to the NAACL 2024 Main Conference!🎉 "
+  text: "<strong>EMMA</strong> accepted to the NAACL 2024 Main Conference! 🎉"
+  url:  https://arxiv.org/abs/2406.11429

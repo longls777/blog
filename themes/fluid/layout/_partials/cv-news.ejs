@@ -1,4 +1,4 @@
-<% const news = site.data.news; %>
+<% const news = site.data.news; if (!news) return; %>
 <section id="news" class="card p-4 mt-4">
   <h2 class="h4 font-weight-bold">News</h2>
   <ul class="list-unstyled mb-0 news-list">
@@ -6,6 +6,11 @@
       <li class="d-flex mt-2">
         <span class="date text-primary mr-2"><%= n.date %></span>
         <span class="txt flex-fill"><%- n.text %></span>
+        <% if (n.url) { %>
+          <a href="<%= n.url %>" target="_blank" class="ml-2 link-icon" title="Link">
+            <i class="fas fa-link"></i>
+          </a>
+        <% } %>
       </li>
     <% }) %>
   </ul>
