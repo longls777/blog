@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /node_modules/
+Disallow: /scripts/
+Allow: /
+Sitemap: https://lishilong.site/sitemap.xml
