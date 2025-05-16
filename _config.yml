@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Heart
-subtitle: ''
-description: ''
-keywords:  "life, think, code"
-author: Aaron
+title: Shilong Li's Blog 
+subtitle: "Shilong Li's Blog | HomePage"
+description: "Shilong Li, alumnus of Beijing University of Posts and Telecommunications (BUPT); shares programming, life and thoughts."
+keywords:  "Shilong Li, BUPT, Beijing University of Posts and Telecommunications, life, think, code"
+author: Shilong Li
 language: en
 timezone: Asia/shanghai
 
@@ -34,6 +34,20 @@ skip_render:
 markdown:
   plugins:
     - "@traptitech/markdown-it-katex"
+
+  
+
+sitemap:
+  path: sitemap.xml
+
+robotstxt:
+  useragent: '*'                 # 默认对所有爬虫都生效
+  allow:
+    - /
+  disallow:
+    - /node_modules/
+    - /scripts/
+  sitemap: https://lishilong.site/sitemap.xml
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -102,6 +116,10 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
+plugins:
+  - hexo-generator-sitemap
+  - hexo-generator-robotstxt 
+
 theme: fluid
 
 # Deployment
