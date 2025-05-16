@@ -4,6 +4,7 @@
   year: 2025
   thumb: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20250515204611333.png
   pdf:   https://arxiv.org/pdf/2502.19361
+  code:  https://github.com/OpenStellarTeam/DeltaBench
 
 - title: "Chinese SimpleQA: A Chinese Factuality Evaluation for Large Language Models"
   authors: "Yancheng He*, <b>Shilong Li*</b>, Jiaheng Liu*, Yingshui Tan, ..."
@@ -19,6 +20,7 @@
   year: 2025
   thumb: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20250515201618694.png
   pdf:   https://arxiv.org/pdf/2410.19720
+  code:  https://github.com/longls777/2D-DPO
 
 - title: "GraphReader: Building Graph-based Agent to Enhance Long-Context Abilities of Large Language Models"
   authors: "<b>Shilong Li*</b>, Yancheng He*, Hangyu Guo*, Xingyuan Bu*, Ge Bai, Jie Liu, Jiaheng Liu, ..."
