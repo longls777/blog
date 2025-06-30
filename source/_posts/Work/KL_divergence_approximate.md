@@ -7,14 +7,11 @@ index_img:
 banner_img: 
 math: true
 comment: true
-
 ---
-
-
 
 > [Approximating KL Divergence](http://joschu.net/blog/kl-approx.html)
 
-## Verl Implement
+## Verl Implementation
 
 ```python
 def kl_penalty(logprob: torch.FloatTensor, ref_logprob: torch.FloatTensor, kl_penalty) -> torch.FloatTensor:
