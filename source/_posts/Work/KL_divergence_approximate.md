@@ -2,7 +2,7 @@
 title: KL Divergence的三种估计方法
 tags: LLM
 categories: Work
-date: 2025-05-28 14:41:00
+date: 2025-06-18 14:41:00
 index_img: 
 banner_img: 
 math: true

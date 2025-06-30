@@ -1,5 +1,5 @@
 ---
-title: LLM Reasoning Model 训练记录
+title: LLM Reasoning Model - Math 训练记录
 tags: LLM
 categories: Work
 date: 2025-06-18 14:35:00
