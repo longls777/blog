@@ -132,14 +132,6 @@ $V(s_t)$ is given by the critic model, which fits the expected return by calcula
 
 ### DPO
 
-### ORPO
-
-### KTO
-
-### IPO
-
-### SimPO
-
 > [High-Dimensional Continuous Control Using Generalized Advantage Estimation](https://arxiv.org/pdf/1506.02438)
 >
 > [Proximal Policy Optimization Algorithms](https://arxiv.org/pdf/1707.06347)
