@@ -1,5 +1,5 @@
 ---
-title: REINFORCE / RLOO / REINFORCE++
+title: REINFORCE / RLOO / REINFORCE++ / GSPO
 tags: LLM
 categories: Work
 date: 2025-07-01 14:39:00
@@ -19,13 +19,11 @@ $$
 $$
 这里的 $\alpha$是学习率，$\nabla_{\theta}J(\theta)$ 就是目标函数 $J(\theta)$对参数$\theta$的梯度，也就是**策略梯度**。
 
-
-
 直接求$J(\theta)$的梯度很困难，因为它依赖于与环境交互产生的整个轨迹的概率分布，而这个分布本身又依赖于 $\theta$。
 
 所以策略梯度采用一种这样的估计方式：
 $$
-\nabla J(\theta) \propto \sum_{s} \mu(s) \sum_{a} q_{\pi}(s, a) \nabla_{\theta} \pi(a|s, \theta)
+\nabla_{\theta} J(\theta) = \sum_{s} \mu(s) \sum_{a} q_{\pi}(s, a) \nabla_{\theta} \pi(a|s, \theta)
 $$
 
 - $\pi(a|s, \theta)$：我们的策略，即在状态$s$下选择动作 $a$的概率
@@ -41,6 +39,8 @@ $$
 
 
 
+
+
 但是上面的估计是无法直接计算的，因为我们既不知道真实的状态分布 $\mu(s)$，也不知道真实的动作价值$q_{\pi}(s, a)$。所以我们需要用采样的思想来近似它。
 $$
 \theta_{t+1} = \theta_t + \alpha \sum_{a} \hat{q}(S_t, a, w) \nabla_{\theta} \pi(a|S_t, \theta)
@@ -53,6 +53,74 @@ $$
 这个更新方式被称为**All-Actions**方法，因为它在更新时，理论上需要对当前状态 $S_t$下的所有动作$a$ 都计算其$\hat{q}$值和梯度
 
 
+
+(2)可以简化为
+$$
+\nabla_{\theta}J(\theta)
+= \mathbb{E}_{s\sim\mu,\;a\sim\pi}\!\bigl[q_{\pi}(s,a)\,\nabla_{\theta}\log\pi(a|s,\theta)\bigr].
+$$
+
+> 使用log-trick:
+>
+> 对概率分布 $p(x,\theta)$ 有恒等式
+> $$
+> \nabla_{\theta}p(x,\theta)\;=\;p(x,\theta)\,\nabla_{\theta}\log p(x,\theta).
+> $$
+> 把它应用到 $\pi(a|s,\theta)$：
+> $$
+> \nabla_{\theta}\pi(a|s,\theta)
+> 
+> = \pi(a|s,\theta)\,\nabla_{\theta}\log\pi(a|s,\theta).
+> $$
+> 上述转化基于**对数的导数**：$\dfrac{\mathrm d}{\mathrm d\theta}\log f =\dfrac{1}{f}\dfrac{\mathrm d f}{\mathrm d\theta}$
+>
+> 然后
+> $$
+> \begin{aligned}
+> 
+> \nabla_{\theta}J(\theta)
+> 
+> &= \sum_{s}\mu(s)\sum_{a} q_{\pi}(s,a)\;
+> 
+> ​      \pi(a|s,\theta)\,\nabla_{\theta}\log\pi(a|s,\theta) \\[6pt]
+> 
+> &= \sum_{s}\mu(s)\;
+> 
+> ​      \underbrace{\sum_{a}\pi(a|s,\theta)\,q_{\pi}(s,a)\,
+> 
+> ​        \nabla_{\theta}\log\pi(a|s,\theta)}_{\displaystyle
+> 
+> ​        =\;\mathbb{E}_{a\sim\pi(\cdot|s,\theta)}
+> 
+> ​        \!\!\bigl[q_{\pi}(s,a)\,\nabla_{\theta}\log\pi(a|s,\theta)\bigr]}.
+> 
+> \end{aligned}
+> $$
+
+是另一种常见写法，意味着我们可以用单条轨迹对梯度做无偏的 Monte‑Carlo 估计，也就是**Sample‑Action**
+
+同时，由于策略梯度可以 减去任意状态函数 $b(s)$而不改变期望值：
+$$
+\mathbb{E}\bigl[(q_{\pi}(s,a)-b(s))\nabla_{\theta}\log\pi(a|s,\theta)\bigr].
+$$
+所以可以选择 $b(s)=V_{\pi}(s)$ 最小化方差，这也正是 Actor‑Critic 的思想来源
+
+> 这是因为
+> $$
+> \mathbb{E}_{a\sim\pi}\!\bigl[\nabla_{\theta}\log\pi(a\mid s,\theta)\bigr]
+> =\sum_{a}\pi(a\mid s,\theta)\,\nabla_{\theta}\log\pi(a\mid s,\theta)
+> =\nabla_{\theta}\sum_{a}\pi(a\mid s,\theta)
+> =\nabla_{\theta}1
+> =0.
+> $$
+> 所以 $b(s)$那一项可以提出来（因为不依赖动作$a$，而$q_{\pi}(s,a)$就不可以），而后面的基准项为0，所以可以消掉
+
+当 $b(s)=V_\pi(s)$ 时，$(q_\pi(s,a)-b(s))$ 就等于 **优势函数**
+$$
+A_\pi(s,a)=Q_\pi(s,a)-V_\pi(s).
+$$
+
+
 ## REINFORCE
 
 REINFORCE算法是一种更简单的蒙特卡洛方法，它对公式3做了进一步的简化和近似：
@@ -63,10 +131,12 @@ REINFORCE算法是一种更简单的蒙特卡洛方法，它对公式3做了进�
 
 所以REINFORCE的更新公式就变成了：
 $$
-\theta_{t+1} = \theta_t + \alpha G_t \nabla_{\theta} \log \pi(a_t|S_t, \theta))
+\theta_{t+1} = \theta_t + \alpha G_t \nabla_{\theta} \log \pi(a_t|S_t, \theta)
 $$
 
 > 注：这里用$\nabla \log \pi$是数学上的一个等价变换，称为log-derivative trick，其效果和$\nabla \pi$的目标一致，但在计算上更稳定、更方便
+>
+> 其中 $G_t=\sum_{k=t}^{T}\gamma^{\,k-t}R_k$（一般而言 $\gamma=1$）
 
 可以看到，REINFORCE只针对**实际执行的动作**进行更新，用**整条轨迹的未来回报 $G_t$** 作为其好坏的评判标准，这就是它被称为蒙特卡洛策略梯度的原因。
 
@@ -267,4 +337,6 @@ def compute_grpo_outcome_advantage(
 和`compute_reinforce_plus_plus_baseline_outcome_advantage`一样，都采用outcome-only先算一个整体reward，然后计算**同一prompt的组内均值和标准差**
 
 `norm_adv_by_std_in_grpo`控制是否除以标准差(+ epsilon)，Dr. GRPO提出除以标准差会引入**长度偏置**，但是Dr. GRPO方差稍高
+
+总体上，REINFORCE 方差最大、RLOO 次之，GRPO 和 REINFORCE++ 由于批或组内归一化，方差进一步下降但保持无偏。
 
