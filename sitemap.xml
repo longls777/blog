@@ -2,18 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://lishilong.site/2025/07/02/Work/GRPO/</loc>
-    
-    <lastmod>2025-07-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://lishilong.site/2025/07/01/Work/REINFORCE/</loc>
     
-    <lastmod>2025-07-01</lastmod>
+    <lastmod>2025-07-30</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -67,7 +58,7 @@
 
   <url>
     <loc>https://lishilong.site/</loc>
-    <lastmod>2025-07-27</lastmod>
+    <lastmod>2025-07-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -75,14 +66,14 @@
   
   <url>
     <loc>https://lishilong.site/tags/LLM-RLHF/</loc>
-    <lastmod>2025-07-27</lastmod>
+    <lastmod>2025-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://lishilong.site/tags/LLM/</loc>
-    <lastmod>2025-07-27</lastmod>
+    <lastmod>2025-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -91,7 +82,7 @@
   
   <url>
     <loc>https://lishilong.site/categories/Work/</loc>
-    <lastmod>2025-07-27</lastmod>
+    <lastmod>2025-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
