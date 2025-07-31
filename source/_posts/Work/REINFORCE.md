@@ -1,5 +1,5 @@
 ---
-title: REINFORCE / RLOO / REINFORCE++ / GSPO
+title: REINFORCE / RLOO / REINFORCE++ / GRPO
 tags: LLM
 categories: Work
 date: 2025-07-01 14:39:00
@@ -29,7 +29,7 @@ $$
 - $\pi(a|s, \theta)$：我们的策略，即在状态$s$下选择动作 $a$的概率
 - $\nabla_{\theta} \pi(a|s, \theta)$：策略函数对参数 $\theta$的梯度。这个梯度向量指向了这样一个方向：**如果我们沿着这个方向更新$\theta$，那么在状态 $s$下选择动作 $a$的概率 $\pi(a|s, \theta)$会增加得最快**
 - $q_{\pi}(s, a)$：**动作价值函数（Action-Value Function / $Q$*-Function*）**，指在状态 $s$下，执行动作$a$，然后继续遵循当前策略 $\pi$，所能获得的**期望总回报**
-- $\mu(s)$：在当前策略 $\pi$下，状态$s$的**稳态分布**
+- $\mu(s)$：在当前策略 $\pi$下，状态$s$的**稳态分布（discounted state-visitation distribution）**
 
 分析：
 
@@ -340,3 +340,141 @@ def compute_grpo_outcome_advantage(
 
 总体上，REINFORCE 方差最大、RLOO 次之，GRPO 和 REINFORCE++ 由于批或组内归一化，方差进一步下降但保持无偏。
 
+
+
+# Summary
+
+总结一下，我们要优化的目标是：
+$$
+θ_{new}=θ_{old}+\alpha\nabla_{\theta}J(\theta)
+$$
+其中$\nabla_{\theta}J(\theta)$是下式这样的无偏估计：
+$$
+\nabla_{\theta}J(\theta)
+= \mathbb{E}_{s\sim\mu,\;a\sim\pi}\!\bigl[q_{\pi}(s,a)\,\nabla_{\theta}\log\pi(a|s,\theta)\bigr].
+$$
+根据**基线不变性**以及**重要性采样**：
+
+-  **基线不变性**：对任意 $b(s)$，令 $A_\pi(s,a)=q_\pi(s,a)-b(s)$，则
+
+  $\mathbb{E}[\nabla\log\pi\,b(s)]=0\Rightarrow$ 可把 $q_\pi$ 换成优势 $A_\pi$ 而不改梯度期望（无偏）
+
+-  **重要性采样（Importance Sampling, IS）**：若从 $\pi_{\text{old}}$ 采样，  $\mathbb{E}_{\pi_\theta}[f]=\mathbb{E}_{\pi_{\text{old}}}\!\big[r(s,a)f\big]$,
+
+  其中 $r(s,a)=\frac{\pi_\theta(a|s)}{\pi_{\text{old}}(a|s)}$
+
+我们可以总结常见算法的公式如下
+
+### REINFORCE (baseline)
+
+**采样**：通常 on-policy，即 $a\sim\pi_\theta(\cdot|s)$。
+
+**等效权重**：$q_\pi(s,a)$ 的无偏蒙特卡洛估计 $\hat q(s,a)$，常写成优势 $\hat A(s,a)=\hat q(s,a)-b(s)$。
+
+**梯度**：
+$$
+
+\nabla_\theta J
+
+=\mathbb{E}_{\pi_\theta}\!\big[\hat A(s,a)\,\nabla_\theta\log\pi_\theta(a|s)\big].
+$$
+
+### PPO (clipped surrogate)
+
+**采样**：从 $\pi_{\text{old}}$（收集到的轨迹）采样
+
+**关键**：用 IS 比率 $r(s,a)=\frac{\pi_\theta}{\pi_{\text{old}}}$，再用**裁剪**抑制更新过大；优势 $\hat A$ 通常由 $\pi_{\text{old}}$ 的回放评估而来（e.g. GAE, TD-Error)
+
+**目标**：$\mathcal L(\theta)=\mathbb{E}_{\pi_{\text{old}}}\big[\min\{r\hat A,\;\mathrm{clip}(r,1\!-\!\epsilon,1\!+\!\epsilon)\hat A\}\big]$
+
+**梯度**：
+$$
+\nabla_\theta J
+=\mathbb{E}_{\pi_{\text{old}}}\!\Big[\underbrace{\tilde q_{\text{PPO}}(s,a;\theta)}_{\text{等效“优势”权重}}\;\nabla_\theta\log\pi_\theta(a|s)\Big],
+$$
+其中
+$$
+\tilde q_{\text{PPO}}(s,a;\theta)=
+
+\begin{cases}
+
+r(s,a)\,\hat A(s,a), & (\hat A\ge 0 \land r\le 1+\varepsilon)\;\;\vee\;\;(\hat A\le 0 \land r\ge 1-\varepsilon),\\
+
+0, &  (\hat A>0 \land r>1+\varepsilon)\;\;\vee\;\;(\hat A<0 \land r<1-\varepsilon).
+
+\end{cases}
+$$
+也就是PPO把 REINFORCE 的“优势权重”换成了“**被信赖域掩码过的 IS 加权优势**”。
+
+
+
+### RLOO
+
+**采样**：on-policy；对同一 状态$s$ 一次采样 $K$ 个动作 $\{a_i\}$，得奖励 $\{r_i\}$。
+
+**留一基线**（降方差）：$A_i=r_i-\frac{1}{K-1}\sum_{j\neq i} r_j$。
+
+**梯度**：
+$$
+\nabla_\theta J
+
+=\mathbb{E}_{\pi_\theta}\!\Big[\frac{1}{K}\sum_{i=1}^K
+
+A_i\,\nabla_\theta\log\pi_\theta(a_i|s)\Big].
+$$
+
+### GRPO
+
+**采样**：通常像 RLOO 一样，每个状态 $s$ 采样一组动作（序列）。
+
+**组相对优势**：以组均值（可配合组标准差）做基线与归一化：
+$$
+\tilde A_i=\frac{r_i-\frac{1}{G}\sum_j r_j}{\mathrm{Std}(r_{1:G})+\varepsilon}.
+$$
+
+
+**PPO 化**：对**序列级**概率比率 $r(s,a_i)=\pi_\theta(a_i|s)/\pi_{\text{old}}(a_i|s)$ 做裁剪；
+
+再加到参考策略的 **KL 正则**：$-\beta\,D_{\text{KL}}(\pi_\theta\|\pi_{\text{ref}})$。
+
+**梯度**（分两部分）：
+$$
+\underbrace{\mathbb{E}_{\pi_{\text{old}}}\!\big[\tilde q_{\text{GRPO}}(s,a;\theta)\,\nabla\log\pi_\theta(a|s)\big]}_{\text{PPO 裁剪后的组优势项}}
+
+\;+\;
+
+\underbrace{\mathbb{E}_{\pi_\theta}\!\big[q_{\text{KL}}(s,a)\,\nabla\log\pi_\theta(a|s)\big]}_{\text{KL 正则项}},
+$$
+其中
+$$
+\tilde q_{\text{GRPO}}(s,a;\theta)=
+
+\begin{cases}
+
+r(s,a)\,\hat A(s,a), & (\hat A\ge 0 \land r\le 1+\varepsilon)\;\;\vee\;\;(\hat A\le 0 \land r\ge 1-\varepsilon),\\
+
+0, &  (\hat A>0 \land r>1+\varepsilon)\;\;\vee\;\;(\hat A<0 \land r<1-\varepsilon).
+
+\end{cases}
+$$
+
+
+> $\nabla_\theta D_{\text{KL}}(\pi_\theta\|\pi_{\text{ref}})=\mathbb{E}_{\pi_\theta}[(\log\pi_\theta-\log\pi_{\text{ref}})\,\nabla\log\pi_\theta]$
+>
+>$q_{\text{KL}}(s,a)= -\beta\big(\log\pi_\theta(a|s)-\log\pi_{\text{ref}}(a|s)\big).$
+
+
+
+实践里既有把 KL **作为额外正则项**（不被裁剪）的做法，也有把 KL **折算进奖励**（会被白化/裁剪）的做法；前者归为**PPO/GRPO 风格**，后者归为**REINFORCE++ 风格**
+
+### REINFORCE++
+
+**采样**：多样本/组采样（on-policy 或近似 on-policy）。
+
+**优势**：不学价值函数，直接用回报并做**跨批/跨组的全局标准化**得到 $\hat A_{\text{global}}$
+
+**KL reward shaping**：把**逐 token** 的 $-\lambda\,\mathrm{KL}(\pi_\theta\|\pi_{\text{ref}})$ 当作额外即时负奖励，等价于把
+$$
+q_\pi(s,a)\quad\mapsto\quad q_\pi(s,a)\;-\;\lambda\sum_{t\le \tau(s,a)}\!\big(\log\pi_\theta(a_t|s_t)-\log\pi_{\text{ref}}(a_t|s_t)\big).
+$$
+**PPO 化**：同 GRPO，对（序列或 token 级）比率做裁剪
