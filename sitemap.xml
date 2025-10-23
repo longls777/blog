@@ -2,6 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lishilong.site/2025/05/28/RL/Entroy_compute/</loc>
+    
+    <lastmod>2025-10-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://lishilong.site/2025/06/18/RL/LLM_reasoning_model_practice/</loc>
+    
+    <lastmod>2025-10-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://lishilong.site/2025/09/26/RL/Prompt_and_E_acc/</loc>
+    
+    <lastmod>2025-09-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://lishilong.site/2025/07/01/RL/REINFORCE/</loc>
     
     <lastmod>2025-07-31</lastmod>
@@ -29,24 +56,6 @@
   </url>
   
   <url>
-    <loc>https://lishilong.site/2025/06/18/RL/LLM_reasoning_model_practice/</loc>
-    
-    <lastmod>2025-06-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lishilong.site/2025/05/28/RL/Entroy_compute/</loc>
-    
-    <lastmod>2025-06-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://lishilong.site/about/index.html</loc>
     
     <lastmod>2025-05-15</lastmod>
@@ -58,7 +67,7 @@
 
   <url>
     <loc>https://lishilong.site/</loc>
-    <lastmod>2025-08-18</lastmod>
+    <lastmod>2025-10-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -66,14 +75,21 @@
   
   <url>
     <loc>https://lishilong.site/tags/LLM-RLHF/</loc>
-    <lastmod>2025-08-18</lastmod>
+    <lastmod>2025-10-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://lishilong.site/tags/LLM/</loc>
-    <lastmod>2025-08-18</lastmod>
+    <lastmod>2025-10-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://lishilong.site/tags/LLM-RL/</loc>
+    <lastmod>2025-10-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -82,7 +98,7 @@
   
   <url>
     <loc>https://lishilong.site/categories/Work/</loc>
-    <lastmod>2025-08-18</lastmod>
+    <lastmod>2025-10-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
