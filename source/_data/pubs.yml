@@ -1,3 +1,11 @@
+- title: "MM-BrowseComp: A Comprehensive Benchmark for Multimodal Browsing Agents"
+  authors: "<b>Shilong Li*</b>, Xingyuan Bu*, Wenjie Wang, Jiaheng Liu, ..."
+  venue: "arXiv"
+  year: 2025
+  thumb: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-20251023115906202.png
+  pdf:   https://arxiv.org/pdf/2508.13186
+  code:  https://github.com/MMBrowseComp/MM-BrowseComp
+
 - title: "Can Large Language Models Detect Errors in Long Chain-of-Thought Reasoning?"
   authors: "Yancheng He*, <b>Shilong Li*</b>, Jiaheng Liu*, Weixun Wang*, Xingyuan Bu, Ge Zhang, ..."
   venue: "Association for Computational Linguistics (ACL)"

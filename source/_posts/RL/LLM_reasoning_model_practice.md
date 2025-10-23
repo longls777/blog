@@ -9,8 +9,6 @@ math: true
 comment: true
 ---
 
-
-
 > Infra: https://github.com/volcengine/verl
 >
 > Train Data: https://huggingface.co/datasets/BytedTsinghua-SIA/DAPO-Math-17k

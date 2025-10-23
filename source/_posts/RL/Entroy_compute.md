@@ -84,4 +84,3 @@ entropy = -(p * logp).sum(-1)
 - `softmax(logits)` 本身底层也会先减 max 再做 `exp()`，保证数值不爆
 - `logsumexp` 也是同样的 trick
 - 于是整个式子中不会出现 “先指数化得到极大或极小值，再取对数” 这种前后相抵但中间溢出的操作
-
