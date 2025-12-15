@@ -1,5 +1,5 @@
 ---
-title: <Paper Reading> DeepSeekMath > Pushing the Limits of Mathematical Reasoning in Open Language Models
+title: "<Paper Reading> DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models"
 tags: LLM RLHF
 categories: PaperReading
 date: 2025-08-11 14:26:00

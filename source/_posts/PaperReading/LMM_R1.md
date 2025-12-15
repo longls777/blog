@@ -1,5 +1,5 @@
 ---
-title: <Paper Reading> LMM-R1 > Empowering 3B LMMs with Strong Reasoning Abilities Through Two-Stage Rule-Based RL
+title: "<Paper Reading> LMM-R1: Empowering 3B LMMs with Strong Reasoning Abilities Through Two-Stage Rule-Based RL"
 tags: LLM RLHF
 categories: PaperReading
 date: 2025-08-11 14:26:00
