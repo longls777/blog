@@ -7,6 +7,7 @@ index_img:
 banner_img: 
 math: true
 comment: true
+hide: true
 ---
 
 ## prompt的PPL

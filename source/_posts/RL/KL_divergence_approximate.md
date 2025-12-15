@@ -7,6 +7,7 @@ index_img:
 banner_img: 
 math: true
 comment: true
+hide: true
 ---
 
 > [Approximating KL Divergence](http://joschu.net/blog/kl-approx.html)

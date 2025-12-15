@@ -7,6 +7,7 @@ index_img: https://longls777.oss-cn-beijing.aliyuncs.com/img/image-2024103013302
 banner_img: https://longls777.oss-cn-beijing.aliyuncs.com/img/pexels-sergey-pesterev-69811391-14578422.jpg
 math: true
 comment: true
+hide: true
 ---
 
 # Currently popular RLHF Method

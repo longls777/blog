@@ -8,6 +8,7 @@ index_img:
 banner_img:
 math: true
 comment: true
+hide: true
 ---
 
 > https://arxiv.org/pdf/2503.07536
