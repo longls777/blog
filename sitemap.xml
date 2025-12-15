@@ -4,52 +4,7 @@
   <url>
     <loc>https://lishilong.site/2025/05/28/RL/Entroy_compute/</loc>
     
-    <lastmod>2025-10-23</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lishilong.site/2025/06/18/RL/LLM_reasoning_model_practice/</loc>
-    
-    <lastmod>2025-10-23</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lishilong.site/2025/09/26/RL/Prompt_and_E_acc/</loc>
-    
-    <lastmod>2025-09-26</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lishilong.site/2025/07/01/RL/REINFORCE/</loc>
-    
-    <lastmod>2025-07-31</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lishilong.site/2024/10/29/RL/A-unified-perspective-of-RLHF/</loc>
-    
-    <lastmod>2025-07-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lishilong.site/2025/06/18/RL/KL_divergence_approximate/</loc>
-    
-    <lastmod>2025-06-30</lastmod>
+    <lastmod>2025-12-15</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -67,29 +22,15 @@
 
   <url>
     <loc>https://lishilong.site/</loc>
-    <lastmod>2025-10-23</lastmod>
+    <lastmod>2025-12-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>https://lishilong.site/tags/LLM-RLHF/</loc>
-    <lastmod>2025-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://lishilong.site/tags/LLM/</loc>
-    <lastmod>2025-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lishilong.site/tags/LLM-RL/</loc>
-    <lastmod>2025-10-23</lastmod>
+    <lastmod>2025-12-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -98,7 +39,7 @@
   
   <url>
     <loc>https://lishilong.site/categories/Work/</loc>
-    <lastmod>2025-10-23</lastmod>
+    <lastmod>2025-12-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
