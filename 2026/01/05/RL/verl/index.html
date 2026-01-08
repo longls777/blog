@@ -1,0 +1,831 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://longls777.oss-cn-beijing.aliyuncs.com/img/fluid.png">
+  <link rel="icon" href="https://longls777.oss-cn-beijing.aliyuncs.com/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Shilong Li">
+  <meta name="keywords" content="Shilong Li, BUPT, Beijing University of Posts and Telecommunications, life, think, code">
+  
+    <meta name="description" content="Change Log:  2026-01-08: Initial release of the article.   Online-RL  上图是online-rl的简化流程图，省略了ref model 和 critic model 从verl入手，我们分析一下online-rl训练过程中，各个role的显存占用情况，以及目前已有的加速方案 不考虑critic model的情况下，我们一般有三个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Verl">
+<meta property="og:url" content="https://lishilong.site/2026/01/05/RL/verl/index.html">
+<meta property="og:site_name" content="Shilong Li&#39;s Blog">
+<meta property="og:description" content="Change Log:  2026-01-08: Initial release of the article.   Online-RL  上图是online-rl的简化流程图，省略了ref model 和 critic model 从verl入手，我们分析一下online-rl训练过程中，各个role的显存占用情况，以及目前已有的加速方案 不考虑critic model的情况下，我们一般有三个">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://longls777.oss-cn-beijing.aliyuncs.com/img/example-flow-diagram-20260105201041802.png">
+<meta property="article:published_time" content="2026-01-05T12:05:00.000Z">
+<meta property="article:modified_time" content="2026-01-08T10:17:10.835Z">
+<meta property="article:author" content="Shilong Li">
+<meta property="article:tag" content="RLHF">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://longls777.oss-cn-beijing.aliyuncs.com/img/example-flow-diagram-20260105201041802.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Verl - Shilong Li&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.15.6/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/cv.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lishilong.site","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Shilong Li&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://longls777.oss-cn-beijing.aliyuncs.com/img/example-flow-diagram-20260105201041802.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Verl"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Shilong Li
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-01-05 20:05" pubdate>
+          January 5, 2026 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          968 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Verl</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    Last updated on January 8, 2026 pm
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p><strong>Change Log:</strong></p>
+<ul>
+<li><strong>2026-01-08:</strong> Initial release of the article.</li>
+</ul>
+</blockquote>
+<h1>Online-RL</h1>
+<p><img src="https://longls777.oss-cn-beijing.aliyuncs.com/img/example-flow-diagram-20260105201041802.png" srcset="/img/loading.gif" lazyload alt="online-rl pipeline"></p>
+<p>上图是online-rl的简化流程图，省略了ref model 和 critic model</p>
+<p>从verl入手，我们分析一下online-rl训练过程中，各个role的显存占用情况，以及目前已有的加速方案</p>
+<p>不考虑critic model的情况下，我们一般有三个模型要加载：</p>
+<ul>
+<li>reference model_1，用于rollout阶段进行轨迹的rollout，是上一个step的policy model，一般用vllm / sglang部署，以加速rollout</li>
+<li>reference model_2，用于logprob的重计算，由于vllm/sglang精度的问题，rollout阶段算出来的logprob不太准，为了重采样时更加准确，因此要用hf加载，计算准确的logprob_ref
+<ul>
+<li>只有当需要计算kl或者需要重要性采样的时候才会加载</li>
+</ul>
+</li>
+<li>actor model，策略模型，根据策略梯度公式进行梯度更新，也需要计算logprob_policy</li>
+</ul>
+<p>这三个模型在verl上默认是分阶段加载的，也可以理解为时分复用，顺序就是按照介绍顺序</p>
+<p>对于单机8卡来说，假设使用vllm进行rollout，fsdp作为多卡训练引擎，以一个7b模型为例：</p>
+<h3 id="rollout">rollout</h3>
+<p>在rollout的时候有这样的几个参数控制分片：</p>
+<ul>
+<li>tensor_model_parallel_size</li>
+<li>pipeline_model_parallel_size</li>
+<li>data_parallel_size
+<ul>
+<li>默认是1，不用修改，vllm内部会自动计算真正的data_parallel_size</li>
+</ul>
+</li>
+</ul>
+<p>在fsdp构建rollout mesh的时候，计算逻辑是：</p>
+<ul>
+<li>infer_tp = tensor_model_parallel_size * data_parallel_size</li>
+<li>infer_pp = pipeline_model_parallel_size</li>
+<li>infer_world_size = infer_tp * infer_pp</li>
+<li>dp = world_size // infer_world_size</li>
+</ul>
+<p>8卡时world_size=8，假如设置：</p>
+<ul>
+<li>tensor_model_parallel_size=4</li>
+<li>pipeline_model_parallel_size=1</li>
+</ul>
+<p>那么：</p>
+<ul>
+<li>infer_tp = 4 * 1 = 4</li>
+<li>infer_world_size = 4 * 1 = 4</li>
+<li>dp = 8 / 4 = 2</li>
+<li>mesh = (dp=2, infer_tp=4, infer_pp=1)</li>
+</ul>
+<p>也就是说，会有两个并行的vllm推理副本，分别占据4张卡</p>
+<h3 id="finish-rollout">finish rollout</h3>
+<p>在rollout阶段结束的时候，也就是generate_sequences调用结束，pipeline会进入到trainer_mode，如果设置了rollout.free_cache_engine=True，那么对于vllm rollout而言，会reset_prefix_cache，vllm进程进入sleep状态，从而将kv_cache 和权重都卸载掉，具体卸载实现需要看vllm的实现。不过可以确定的是，GPU显存会得到释放</p>
+<p>rollout.free_cache_engine一般默认是True，默认进行显存的释放</p>
+<h3 id="ref-logprob-re-compute">ref logprob re-compute</h3>
+<p>fsdp包裹的hf模型进行logprob计算，默认的actor_rollout_ref.actor.fsdp_config.fsdp_size=-1，相当于fsdp=world_size，也就是默认FULL_SHARD across world_size，在整个world_size上对模型参数进行分片，对于7b模型来说，通信开销非常大，尤其是多机多卡的时候，比如8机64卡</p>
+<p>对于7b模型而言，单卡h100 80G显存就绰绰有余，因此actor_rollout_ref.actor.fsdp_config.fsdp_size设置为1可能更合适一点</p>
+<p>设置为1时，计算ref model的logprob的时候，采用的是dp=world_size，速度相对较快</p>
+<h3 id="update-actor">update actor</h3>
+<p>同样是fsdp包裹hf进行参数更新，规则和ref logprob re-compute基本一样，同样通过actor_rollout_ref.actor.fsdp_config.fsdp_size来控制分片，默认-1，也就是模型参数分布在64卡上</p>
+<p>和ref不同的是，actor会进行梯度更新，也就是会进行后向传播，如果actor_rollout_ref.actor.fsdp_config.fsdp_size设置为1的话，那么首先显存压力会大一些，不过对于7b模型 来说，也不会大太多，同时反向传播会走all-reduce梯度，相比于-1时（可能走的是all-gather+reduce-scatter），速度也不一定更快，所以看起来actor_rollout_ref.actor.fsdp_config.fsdp_size维持默认值比较合适，具体需要试验一下</p>
+<h3 id="how-to-accelerate-training-stage">how to accelerate training stage?</h3>
+<p>在多机多卡场景下，比如8机64卡，如何对训练进行加速呢？vllm rollout</p>
+<ul>
+<li>尽可能提高gpu gpu_memory_utilization，增加可用的kv-cache，一般设置为0.9～0.95</li>
+<li>尽可能用小的tensor_parallel_size，比如7b模型就可以用tensor_parallel_size=1，从而尽可能增加vllm 副本，提高rollout时的数据并行度</li>
+<li>log_prob_micro_batch_size_per_gpu在避免oom的情况下尽可能大</li>
+<li>use_dynamic_bsz=True</li>
+</ul>
+<p>但是上面的调优其实都是在verl这种同步架构上面继续压榨潜力，实际上目前社区已经有一些异步的架构了，比如<a target="_blank" rel="noopener" href="https://github.com/inclusionAI/AReaL">AReal</a>，可能对于多机规模上去后同步等待严重的问题有一定的缓解</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://hebiao064.github.io/rl-memory-management">https://hebiao064.github.io/rl-memory-management</a></p>
+<p><a target="_blank" rel="noopener" href="https://verl.readthedocs.io/en/latest/perf/perf_tuning.html">https://verl.readthedocs.io/en/latest/perf/perf_tuning.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://verl.readthedocs.io/en/latest/perf/nsight_profiling.html">https://verl.readthedocs.io/en/latest/perf/nsight_profiling.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2505.24298">AREAL: A Large-Scale Asynchronous Reinforcement Learning System for Language Reasoning</a></p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Work/" class="category-chain-item">Work</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/RLHF/" class="print-no-link">#RLHF</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Verl</div>
+      <div>https://lishilong.site/2026/01/05/RL/verl/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Shilong Li</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 5, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>January 8, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/05/28/RL/Entroy_compute/" title="Entroy的数值稳定计算方法">
+                        <span class="hidden-mobile">Entroy的数值稳定计算方法</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/gitalk/1.7.2/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"Ov23lixkRfOI43RnCYtJ","clientSecret":"e5e2ff04b76e43af1fb9d9d31babac612ae826de","repo":"blog_comments","owner":"longls777","admin":["longls777"],"language":"en","labels":["Gitalk"],"perPage":15,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","enable":true,"autoExpand":true,"id":"uid","recentComment":true},
+          {
+            id: '0acb1b2bba329d479b994b2c264f1a1e'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Page Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Unique Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
