@@ -2,18 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://lishilong.site/2026/01/05/RL/verl/</loc>
+    <loc>https://lishilong.site/2026/01/16/RL/Weighted_Cross_Entory/</loc>
     
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-01-16</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://lishilong.site/2025/05/28/RL/Entroy_compute/</loc>
+    <loc>https://lishilong.site/2025/05/28/RL/Entroy_Stable_Compute/</loc>
     
-    <lastmod>2025-12-15</lastmod>
+    <lastmod>2026-01-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://lishilong.site/2026/01/05/RL/verl/</loc>
+    
+    <lastmod>2026-01-08</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -31,7 +40,7 @@
 
   <url>
     <loc>https://lishilong.site/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-01-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -39,14 +48,21 @@
   
   <url>
     <loc>https://lishilong.site/tags/LLM/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-01-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://lishilong.site/tags/LLM-RL/</loc>
+    <lastmod>2026-01-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://lishilong.site/tags/RLHF/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-01-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -55,7 +71,7 @@
   
   <url>
     <loc>https://lishilong.site/categories/Work/</loc>
-    <lastmod>2026-01-08</lastmod>
+    <lastmod>2026-01-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
