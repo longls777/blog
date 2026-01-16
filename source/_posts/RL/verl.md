@@ -95,8 +95,6 @@ fsdp包裹的hf模型进行logprob计算，默认的actor_rollout_ref.actor.fsdp
 
 
 
-
-
 > https://hebiao064.github.io/rl-memory-management
 >
 > https://verl.readthedocs.io/en/latest/perf/perf_tuning.html
