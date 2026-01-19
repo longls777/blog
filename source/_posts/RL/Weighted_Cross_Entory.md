@@ -9,8 +9,6 @@ math: true
 comment: true
 ---
 
-
-
 问题来自论文：Q-SFT: Q-Learning for Language Models via Supervised Fine-Tuning
 
 LLM的objective定义为 $\mathcal{L}_{CE}(\phi)=\mathbb{E}_{(s,a)\sim\mathcal{D}}[\log~\pi_{\phi}(a|s)]$
@@ -27,7 +25,9 @@ Q-SFT希望实现将Q-Learning融入到LLM的BC中，为此，Q-SFT提出了一�
 $$
 \mathcal{L}_{WCE}(\theta) = \mathbb{E}_{(s, a)\sim\mathcal{D}} [ w(s, a) \log p_{\theta}(a|s) + (1-w(s, a)) \log p_{\theta}(a_d|s)]
 $$
-其中$a_{d}$是dummy action，$  0<w(s, a) < 1$，论文称这个objective将实现：$\hat{p}_{\theta}(a|s)\approx w(s,a)\pi_{\beta}(a|s)$  for all $a\ne a_{d}$ 
+其中$a_{d}$是dummy action，$0<w(s, a) < 1$，论文称这个objective将实现：
+
+ $\hat{p}_{\theta}(a|s)\approx w(s,a)\pi_{\beta}(a|s)$  for all $a\ne a_{d}$ 
 
 也就是说，最终将实现一个带权的原始数据集概率分布
 

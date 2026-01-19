@@ -1,10 +1,10 @@
 ---
-title: Verl
+title: Verl Optimization
 tags: RLHF
 categories: Work
 date: 2026-01-05 20:05:00
-index_img: https://longls777.oss-cn-beijing.aliyuncs.com/img/example-flow-diagram-20260105201041802.png
-banner_img: https://longls777.oss-cn-beijing.aliyuncs.com/img/example-flow-diagram-20260105201041802.png
+index_img: 
+banner_img: 
 math: true
 comment: true
 ---
