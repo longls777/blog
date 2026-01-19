@@ -21,26 +21,24 @@
   <meta name="author" content="Shilong Li">
   <meta name="keywords" content="Shilong Li, BUPT, Beijing University of Posts and Telecommunications, life, think, code">
   
-    <meta name="description" content="Change Log:  2026-01-08: Initial release of the article.   Online-RL  上图是online-rl的简化流程图，省略了ref model 和 critic model 从verl入手，我们分析一下online-rl训练过程中，各个role的显存占用情况，以及目前已有的加速方案 不考虑critic model的情况下，我们一般有三个">
+    <meta name="description" content="Shilong Li, alumnus of Beijing University of Posts and Telecommunications (BUPT); shares programming, life and thoughts.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Verl Optimization">
-<meta property="og:url" content="https://lishilong.site/2026/01/05/RL/verl/index.html">
+<meta property="og:title" content="Shilong Li&#39;s Blog">
+<meta property="og:url" content="https://lishilong.site/2026/01/17/RL/temp/index.html">
 <meta property="og:site_name" content="Shilong Li&#39;s Blog">
-<meta property="og:description" content="Change Log:  2026-01-08: Initial release of the article.   Online-RL  上图是online-rl的简化流程图，省略了ref model 和 critic model 从verl入手，我们分析一下online-rl训练过程中，各个role的显存占用情况，以及目前已有的加速方案 不考虑critic model的情况下，我们一般有三个">
+<meta property="og:description" content="Shilong Li, alumnus of Beijing University of Posts and Telecommunications (BUPT); shares programming, life and thoughts.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://longls777.oss-cn-beijing.aliyuncs.com/img/example-flow-diagram-20260105201041802.png">
-<meta property="article:published_time" content="2026-01-05T12:05:00.000Z">
-<meta property="article:modified_time" content="2026-01-19T03:24:29.412Z">
+<meta property="article:published_time" content="2026-01-17T07:54:31.558Z">
+<meta property="article:modified_time" content="2026-01-17T07:54:31.558Z">
 <meta property="article:author" content="Shilong Li">
-<meta property="article:tag" content="RLHF">
+<meta property="article:tag" content="Shilong Li, BUPT, Beijing University of Posts and Telecommunications, life, think, code">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://longls777.oss-cn-beijing.aliyuncs.com/img/example-flow-diagram-20260105201041802.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Verl Optimization - Shilong Li&#39;s Blog</title>
+  <title>Shilong Li&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -51,8 +49,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.15.6/katex.min.css" />
 
 
 
@@ -225,7 +221,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Verl Optimization"></span>
+            <span id="subtitle" data-typed-text=""></span>
           
         </div>
 
@@ -241,8 +237,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-01-05 20:05" pubdate>
-          January 5, 2026 pm
+        <time datetime="2026-01-17 15:54" pubdate>
+          January 17, 2026 pm
         </time>
       </span>
     
@@ -253,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          968 words
+          0 words
         
       </span>
     
@@ -264,7 +260,7 @@
         
         
         
-          9 mins
+          1 mins
         
       </span>
     
@@ -310,98 +306,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Verl Optimization</h1>
-            
-              <p id="updated-time" class="note note-info" style="">
-                
-                  
-                    Last updated on January 19, 2026 am
-                  
-                
-              </p>
+            <h1 id="seo-header"></h1>
             
             
               <div class="markdown-body">
                 
-                <blockquote>
-<p><strong>Change Log:</strong></p>
-<ul>
-<li><strong>2026-01-08:</strong> Initial release of the article.</li>
-</ul>
-</blockquote>
-<h1>Online-RL</h1>
-<p><img src="https://longls777.oss-cn-beijing.aliyuncs.com/img/example-flow-diagram-20260105201041802.png" srcset="/img/loading.gif" lazyload alt="online-rl pipeline"></p>
-<p>上图是online-rl的简化流程图，省略了ref model 和 critic model</p>
-<p>从verl入手，我们分析一下online-rl训练过程中，各个role的显存占用情况，以及目前已有的加速方案</p>
-<p>不考虑critic model的情况下，我们一般有三个模型要加载：</p>
-<ul>
-<li>reference model_1，用于rollout阶段进行轨迹的rollout，是上一个step的policy model，一般用vllm / sglang部署，以加速rollout</li>
-<li>reference model_2，用于logprob的重计算，由于vllm/sglang精度的问题，rollout阶段算出来的logprob不太准，为了重采样时更加准确，因此要用hf加载，计算准确的logprob_ref
-<ul>
-<li>只有当需要计算kl或者需要重要性采样的时候才会加载</li>
-</ul>
-</li>
-<li>actor model，策略模型，根据策略梯度公式进行梯度更新，也需要计算logprob_policy</li>
-</ul>
-<p>这三个模型在verl上默认是分阶段加载的，也可以理解为时分复用，顺序就是按照介绍顺序</p>
-<p>对于单机8卡来说，假设使用vllm进行rollout，fsdp作为多卡训练引擎，以一个7b模型为例：</p>
-<h3 id="rollout">rollout</h3>
-<p>在rollout的时候有这样的几个参数控制分片：</p>
-<ul>
-<li>tensor_model_parallel_size</li>
-<li>pipeline_model_parallel_size</li>
-<li>data_parallel_size
-<ul>
-<li>默认是1，不用修改，vllm内部会自动计算真正的data_parallel_size</li>
-</ul>
-</li>
-</ul>
-<p>在fsdp构建rollout mesh的时候，计算逻辑是：</p>
-<ul>
-<li>infer_tp = tensor_model_parallel_size * data_parallel_size</li>
-<li>infer_pp = pipeline_model_parallel_size</li>
-<li>infer_world_size = infer_tp * infer_pp</li>
-<li>dp = world_size // infer_world_size</li>
-</ul>
-<p>8卡时world_size=8，假如设置：</p>
-<ul>
-<li>tensor_model_parallel_size=4</li>
-<li>pipeline_model_parallel_size=1</li>
-</ul>
-<p>那么：</p>
-<ul>
-<li>infer_tp = 4 * 1 = 4</li>
-<li>infer_world_size = 4 * 1 = 4</li>
-<li>dp = 8 / 4 = 2</li>
-<li>mesh = (dp=2, infer_tp=4, infer_pp=1)</li>
-</ul>
-<p>也就是说，会有两个并行的vllm推理副本，分别占据4张卡</p>
-<h3 id="finish-rollout">finish rollout</h3>
-<p>在rollout阶段结束的时候，也就是generate_sequences调用结束，pipeline会进入到trainer_mode，如果设置了rollout.free_cache_engine=True，那么对于vllm rollout而言，会reset_prefix_cache，vllm进程进入sleep状态，从而将kv_cache 和权重都卸载掉，具体卸载实现需要看vllm的实现。不过可以确定的是，GPU显存会得到释放</p>
-<p>rollout.free_cache_engine一般默认是True，默认进行显存的释放</p>
-<h3 id="ref-logprob-re-compute">ref logprob re-compute</h3>
-<p>fsdp包裹的hf模型进行logprob计算，默认的actor_rollout_ref.actor.fsdp_config.fsdp_size=-1，相当于fsdp=world_size，也就是默认FULL_SHARD across world_size，在整个world_size上对模型参数进行分片，对于7b模型来说，通信开销非常大，尤其是多机多卡的时候，比如8机64卡</p>
-<p>对于7b模型而言，单卡h100 80G显存就绰绰有余，因此actor_rollout_ref.actor.fsdp_config.fsdp_size设置为1可能更合适一点</p>
-<p>设置为1时，计算ref model的logprob的时候，采用的是dp=world_size，速度相对较快</p>
-<h3 id="update-actor">update actor</h3>
-<p>同样是fsdp包裹hf进行参数更新，规则和ref logprob re-compute基本一样，同样通过actor_rollout_ref.actor.fsdp_config.fsdp_size来控制分片，默认-1，也就是模型参数分布在64卡上</p>
-<p>和ref不同的是，actor会进行梯度更新，也就是会进行后向传播，如果actor_rollout_ref.actor.fsdp_config.fsdp_size设置为1的话，那么首先显存压力会大一些，不过对于7b模型 来说，也不会大太多，同时反向传播会走all-reduce梯度，相比于-1时（可能走的是all-gather+reduce-scatter），速度也不一定更快，所以看起来actor_rollout_ref.actor.fsdp_config.fsdp_size维持默认值比较合适，具体需要试验一下</p>
-<h3 id="how-to-accelerate-training-stage">how to accelerate training stage?</h3>
-<p>在多机多卡场景下，比如8机64卡，如何对训练进行加速呢？vllm rollout</p>
-<ul>
-<li>尽可能提高gpu gpu_memory_utilization，增加可用的kv-cache，一般设置为0.9～0.95</li>
-<li>尽可能用小的tensor_parallel_size，比如7b模型就可以用tensor_parallel_size=1，从而尽可能增加vllm 副本，提高rollout时的数据并行度</li>
-<li>log_prob_micro_batch_size_per_gpu在避免oom的情况下尽可能大</li>
-<li>use_dynamic_bsz=True</li>
-</ul>
-<p>但是上面的调优其实都是在verl这种同步架构上面继续压榨潜力，实际上目前社区已经有一些异步的架构了，比如<a target="_blank" rel="noopener" href="https://github.com/inclusionAI/AReaL">AReal</a>，可能对于多机规模上去后同步等待严重的问题有一定的缓解</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://hebiao064.github.io/rl-memory-management">https://hebiao064.github.io/rl-memory-management</a></p>
-<p><a target="_blank" rel="noopener" href="https://verl.readthedocs.io/en/latest/perf/perf_tuning.html">https://verl.readthedocs.io/en/latest/perf/perf_tuning.html</a></p>
-<p><a target="_blank" rel="noopener" href="https://verl.readthedocs.io/en/latest/perf/nsight_profiling.html">https://verl.readthedocs.io/en/latest/perf/nsight_profiling.html</a></p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2505.24298">AREAL: A Large-Scale Asynchronous Reinforcement Learning System for Language Reasoning</a></p>
-</blockquote>
-
+                
                 
               </div>
             
@@ -409,34 +319,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Work/" class="category-chain-item">Work</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/RLHF/" class="print-no-link">#RLHF</a>
-      
-    </div>
   
 </div>
 
@@ -446,8 +328,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Verl Optimization</div>
-      <div>https://lishilong.site/2026/01/05/RL/verl/</div>
+      <div></div>
+      <div>https://lishilong.site/2026/01/17/RL/temp/</div>
     </div>
     <div class="license-meta">
       
@@ -459,14 +341,9 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>January 5, 2026</div>
+          <div>January 17, 2026</div>
         </div>
       
-      
-        <div class="license-meta-item license-meta-date">
-          <div>Updated on</div>
-          <div>January 19, 2026</div>
-        </div>
       
       
         <div class="license-meta-item">
@@ -496,18 +373,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/01/16/RL/Weighted_Cross_Entory/" title="加权交叉熵在概率单纯形约束下的解">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">加权交叉熵在概率单纯形约束下的解</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/28/RL/Entroy_Stable_Compute/" title="Entroy的数值稳定计算方法">
-                        <span class="hidden-mobile">Entroy的数值稳定计算方法</span>
+                      <a href="/2026/01/16/RL/Weighted_Cross_Entory/" title="加权交叉熵在概率单纯形约束下的解">
+                        <span class="hidden-mobile">加权交叉熵在概率单纯形约束下的解</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -530,7 +401,7 @@
         var options = Object.assign(
           {"clientID":"Ov23lixkRfOI43RnCYtJ","clientSecret":"e5e2ff04b76e43af1fb9d9d31babac612ae826de","repo":"blog_comments","owner":"longls777","admin":["longls777"],"language":"en","labels":["Gitalk"],"perPage":15,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","enable":true,"autoExpand":true,"id":"uid","recentComment":true},
           {
-            id: '0acb1b2bba329d479b994b2c264f1a1e'
+            id: '896f52df860e3c3ac27726d2694a8ca6'
           }
         )
         var gitalk = new Gitalk(options);
@@ -591,11 +462,6 @@
 
 
   
-
-
-  
-  
-
 
 
 
