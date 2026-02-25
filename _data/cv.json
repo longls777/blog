@@ -1,0 +1,82 @@
+{
+  "basics": {
+    "name": "Shilong Li",
+    "email": "lishilong.aaron@gmail.com",
+    "phone": "",
+    "website": "https://lishilong.site",
+    "summary": "M.S. student at BUPT, focusing on LLM alignment and reasoning.",
+    "location": {
+      "city": "Beijing",
+      "countryCode": "CN"
+    },
+    "profiles": [
+      {
+        "network": "Google Scholar",
+        "username": "",
+        "url": "https://scholar.google.com/citations?user=9VvLSQ4AAAAJ"
+      },
+      {
+        "network": "GitHub",
+        "username": "longls777",
+        "url": "https://github.com/longls777"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "ByteDance",
+      "position": "Research Intern",
+      "startDate": "2025",
+      "endDate": "2026",
+      "summary": "LLM alignment and reasoning research"
+    },
+    {
+      "name": "Alibaba Group",
+      "position": "Research Intern",
+      "startDate": "2024",
+      "endDate": "2025",
+      "summary": ""
+    },
+    {
+      "name": "Didi",
+      "position": "Research Intern",
+      "startDate": "2023",
+      "endDate": "2024",
+      "summary": ""
+    }
+  ],
+  "education": [
+    {
+      "institution": "Beijing University of Posts and Telecommunications (BUPT)",
+      "area": "Artificial Intelligence",
+      "studyType": "M.S.",
+      "startDate": "2023",
+      "endDate": "2026"
+    },
+    {
+      "institution": "Beijing University of Posts and Telecommunications (BUPT)",
+      "area": "Information Engineering",
+      "studyType": "B.S.",
+      "startDate": "2019",
+      "endDate": "2023"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Research",
+      "keywords": ["Large Language Models", "Reinforcement Learning", "NLP", "LLM Alignment", "Reasoning"]
+    },
+    {
+      "name": "Programming",
+      "keywords": ["Python", "PyTorch", "Transformers"]
+    }
+  ],
+  "languages": [
+    { "language": "Chinese", "fluency": "Native speaker" },
+    { "language": "English", "fluency": "Fluent" }
+  ],
+  "publications": [],
+  "presentations": [],
+  "teaching": [],
+  "portfolio": []
+}

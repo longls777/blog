@@ -1,31 +1,41 @@
 {
-  "name": "hexo-site",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "build": "hexo generate",
-    "clean": "hexo clean",
-    "deploy": "hexo deploy",
-    "server": "hexo server"
+  "name": "academic-pages",
+  "version": "0.8.1.1",
+  "description": "Academic Pages Mistakes Jekyll theme npm build scripts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/academicpages/academicpages.github.io"
   },
-  "hexo": {
-    "version": "6.3.0"
+  "keywords": [
+    "jekyll",
+    "theme",
+    "minimal"
+  ],
+  "contributors": [
+    "Michael Rose",
+    "Robert Zupko"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/academicpages/academicpages.github.io/issues"
+  },
+  "homepage": "https://github.com/academicpages/academicpages.github.io",
+  "engines": {
+    "node": ">= 0.10.0"
   },
   "dependencies": {
-    "@traptitech/markdown-it-katex": "^3.6.0",
-    "hexo": "^6.3.0",
-    "hexo-deployer-git": "^3.0.0",
-    "hexo-generator-archive": "^2.0.0",
-    "hexo-generator-category": "^2.0.0",
-    "hexo-generator-index": "^3.0.0",
-    "hexo-generator-robotstxt": "^0.2.0",
-    "hexo-generator-sitemap": "^3.0.1",
-    "hexo-generator-tag": "^2.0.0",
-    "hexo-renderer-ejs": "^2.0.0",
-    "hexo-renderer-markdown-it": "^7.1.0",
-    "hexo-renderer-stylus": "^2.1.0",
-    "hexo-server": "^3.0.0",
-    "hexo-theme-fluid": "^1.9.7",
-    "hexo-theme-landscape": "^0.0.3"
+    "fitvids": "^2.1.1",
+    "jquery": "^3.7.1",
+    "jquery-smooth-scroll": "^2.2.0",
+    "plotly.js-dist-min": "^3.3.0"
+  },
+  "devDependencies": {
+    "onchange": "^7.1.0",
+    "uglify-js": "^3.17.4"
+  },
+  "scripts": {
+    "uglify": "uglifyjs node_modules/jquery/dist/jquery.min.js node_modules/fitvids/dist/fitvids.min.js node_modules/jquery-smooth-scroll/jquery.smooth-scroll.min.js node_modules/plotly.js-dist-min/plotly.min.js assets/js/plugins/jquery.greedy-navigation.js assets/js/_main.js -c -m -o assets/js/main.min.js",
+    "watch:js": "onchange \"assets/js/**/*.js\" -e \"assets/js/main.min.js\" -- npm run build:js",
+    "build:js": "npm run uglify"
   }
 }
